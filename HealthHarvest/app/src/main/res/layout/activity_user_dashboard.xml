@@ -24,6 +24,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.061" />
 
+
+    <ImageView
+        android:id="@+id/tree_pic"
+        android:layout_width="312dp"
+        android:layout_height="424dp"
+        android:layout_marginTop="144dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:foregroundGravity="center"
+        app:layout_constraintTop_toTopOf="@+id/welcomeMessage" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
