@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.HealthHarvest" parent="Base.Theme.HealthHarvest" />
+
+    <style name="NewFontStyle" parent="android:Widget.TextView">
+        <item name="android:textSize">38sp</item>
+    </style>
 </resources>

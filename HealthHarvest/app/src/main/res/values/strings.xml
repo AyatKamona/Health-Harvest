@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">HealthHarvest</string>
+    <string name="dialogue1">Good Work! \nKeep going!</string>
+    <string name="dialogue2">I can see! \nYou are motivated!</string>
+    <string name="dialogue3">Yess! \nStay hydrated!</string>
+    <string name="dialogue4">You are halfway there! \nGo On !</string>
+    <string name="dialogue5">Come on! \nYou can do it!</string>
+    <string name="dialogue6">You are doing great! \nKeep it Up!</string>
+    <string name="dialogue7">You are almost there! \nYou are Rocking!</string>
+    <string name="dialogue8">You did it! \nGreat job!</string>
+    <string name="dialogue9">Keep it up! \nStay Healthy!</string>
 </resources>
