@@ -27,13 +27,27 @@
 
     <ImageView
         android:id="@+id/tree_pic"
-        android:layout_width="312dp"
-        android:layout_height="424dp"
+        android:layout_width="311dp"
+        android:layout_height="421dp"
         android:layout_marginTop="144dp"
+        android:foregroundGravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:foregroundGravity="center"
         app:layout_constraintTop_toTopOf="@+id/welcomeMessage" />
+
+    <TextView
+        android:id="@+id/height_tree"
+        android:layout_width="198dp"
+        android:layout_height="36dp"
+        android:text="TextView"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tree_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.234"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/welcomeMessage"
+        app:layout_constraintVertical_bias="0.143" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -50,4 +64,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.995"
         app:menu="@menu/menu" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

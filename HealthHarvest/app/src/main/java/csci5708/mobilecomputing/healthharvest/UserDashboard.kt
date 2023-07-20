@@ -9,7 +9,16 @@ import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-var tree_type: Int = -1
+object AppData{
+
+    var calorieGoal: Int = 0
+    var calorieAmount: Int = 0
+    var cupsOfWater: Int = 0
+    var height_of_tree: Int = 0
+
+}
+
+
 class UserDashboard : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +31,9 @@ class UserDashboard : AppCompatActivity() {
 
         welcomeMessage.text = "Welcome $user!"
 
+        var height : TextView = findViewById(R.id.height_tree)
         var tree: ImageView = findViewById(R.id.tree_pic)
-        set_tree_type(tree)
+        setTreeType(tree, height)
 
 
         bottomNavigationView.setOnItemSelectedListener {
@@ -47,17 +57,21 @@ class UserDashboard : AppCompatActivity() {
         }
     }
 
-    fun set_tree_type(tree: ImageView){
+    fun setTreeType(tree: ImageView, height: TextView){
 
-        if(tree_type == -1){ tree.setImageResource(R.drawable.boy)}
-        else if(tree_type == 0){ }
-        else if(tree_type == 1){ }
-        else if(tree_type == 2){ }
-        else if(tree_type == 3){ }
-        else if(tree_type == 4){ }
-        else if(tree_type == 5){ }
-        else if(tree_type == 6){ }
-        else if(tree_type == 7){ }
+        var calorieGoal: Int = AppData.calorieGoal
+        var calorieAmount: Int = AppData.calorieGoal
+        var waterIntake: Int = AppData.cupsOfWater
+        var height_of_tree: Int = AppData.height_of_tree
+
+
+        if(calorieGoal == -1){
+            tree.setImageResource(R.drawable.boy)
+            height.text = "Height: " + height_of_tree
+
+        }
+        else if(calorieGoal == 0){ }
+
     }
 }
 
