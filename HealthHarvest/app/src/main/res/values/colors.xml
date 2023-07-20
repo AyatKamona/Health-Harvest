@@ -51,4 +51,5 @@
     <color name="mediumseagreen">#FF3CB371</color>
     <color name="mediumspringgreen">#FF00FA9A</color>
     <color name="mediumblue">#FF0000CD</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>
