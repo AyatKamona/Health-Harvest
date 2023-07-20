@@ -4,47 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFoodItemActivity">
+    tools:context=".EditFoodItemActivity">
 
-    <!-- activity_add_food_item.xml -->
+    <!-- activity_edit_food_item.xml -->
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
         <EditText
-            android:id="@+id/foodNameEditText"
+            android:id="@+id/editFoodNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
             android:hint="Food Name" />
 
         <EditText
-            android:id="@+id/dateTakenEditText"
+            android:id="@+id/editDateTakenEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date"
             android:hint="Date Taken" />
 
         <EditText
-            android:id="@+id/caloriesEditText"
+            android:id="@+id/editCaloriesEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:hint="Calories" />
 
-
-
         <Button
-            android:id="@+id/addFoodButton"
+            android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Add Food" />
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/discardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discard" />
+
     </LinearLayout>
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

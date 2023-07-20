@@ -26,7 +26,7 @@ class AddFoodItemActivity : AppCompatActivity() {
         foodNameEditText = findViewById(R.id.foodNameEditText)
         dateTakenEditText = findViewById(R.id.dateTakenEditText)
         caloriesEditText = findViewById(R.id.caloriesEditText)
-        optionEditText = findViewById(R.id.optionEditText)
+
         addFoodButton = findViewById(R.id.addFoodButton)
 
         foodDatabaseHelper = FoodDatabaseHelper(this)
@@ -50,7 +50,7 @@ class AddFoodItemActivity : AppCompatActivity() {
         val randomId = Random.nextLong()
 
 
-        val foodItem = FoodItem(randomId,name , dateTaken, calories, option)
+        val foodItem = FoodItem(randomId,name , dateTaken, calories)
 
         val newRowId = foodDatabaseHelper.insertFoodItem(foodItem)
 

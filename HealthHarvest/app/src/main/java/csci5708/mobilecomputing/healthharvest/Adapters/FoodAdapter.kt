@@ -29,7 +29,7 @@ class FoodAdapter(private val foodList: List<FoodItem>) :
         holder.foodName.text = currentItem.name
         holder.dateTaken.text = currentItem.dateTaken
         holder.calories.text = currentItem.calories.toString()
-        holder.option.text = currentItem.option
+
     }
 
     override fun getItemCount() = foodList.size
