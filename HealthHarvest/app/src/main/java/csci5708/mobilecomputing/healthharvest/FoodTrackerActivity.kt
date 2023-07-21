@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
+
 class FoodTrackerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -12,7 +14,7 @@ class FoodTrackerActivity : AppCompatActivity() {
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-
+        //updateCalorie(amountAdded)
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.dashboard -> {
@@ -32,5 +34,11 @@ class FoodTrackerActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    fun updateCalorie(calorieAdded: Int){
+
+        AppData.calorieAmount+=calorieAdded
+        AppData.lastTimeFoodAdded = System.currentTimeMillis()
     }
 }

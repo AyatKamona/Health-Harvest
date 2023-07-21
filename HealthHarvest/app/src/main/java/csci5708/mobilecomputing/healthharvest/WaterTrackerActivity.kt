@@ -119,4 +119,10 @@ class WaterTrackerActivity : AppCompatActivity() {
             waterDialogue.setText(getString(R.string.dialogue9))
         }
     }
+
+    fun updateWater(waterAdded: Int){
+
+        AppData.cupsOfWater+=waterAdded
+        AppData.lastTimeWaterAdded = System.currentTimeMillis()
+    }
 }
