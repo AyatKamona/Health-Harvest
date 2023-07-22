@@ -16,6 +16,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import csci5708.mobilecomputing.healthharvest.Adapters.FoodAdapter
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 
+
+
 class FoodTrackerActivity : AppCompatActivity() {
     private lateinit var tableLayout: TableLayout
     private lateinit var foodDatabaseHelper: FoodDatabaseHelper
@@ -111,5 +113,11 @@ class FoodTrackerActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    fun updateCalorie(calorieAdded: Int){
+
+        AppData.calorieAmount+=calorieAdded
+        AppData.lastTimeFoodAdded = System.currentTimeMillis()
     }
 }
