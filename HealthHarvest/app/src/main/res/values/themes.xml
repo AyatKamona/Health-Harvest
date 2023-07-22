@@ -10,4 +10,7 @@
     <style name="NewFontStyle" parent="android:Widget.TextView">
         <item name="android:textSize">38sp</item>
     </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background</item>
+    </style>
 </resources>
