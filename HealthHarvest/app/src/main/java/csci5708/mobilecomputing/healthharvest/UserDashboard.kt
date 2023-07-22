@@ -121,7 +121,12 @@ class UserDashboard : AppCompatActivity() {
         }
 
         else{
-            // have one for neither sun or rain but looks somewhat healthy
+
+            if (calorieTracker < 0.33) tree.setImageResource(R.drawable.regular_sapling)
+            else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.regular_plant)
+            else tree.setImageResource(R.drawable.regular_tree)
+
+
         }
 
         if(waterTracker == 0.0) soilMoisture.text = "Moist Very Low"

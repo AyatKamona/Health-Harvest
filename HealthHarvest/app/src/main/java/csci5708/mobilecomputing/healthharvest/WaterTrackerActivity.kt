@@ -15,7 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class WaterTrackerActivity : AppCompatActivity() {
 
-    var count = 0
+    var count: Int = 0
     private lateinit var waterIcon: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +62,7 @@ class WaterTrackerActivity : AppCompatActivity() {
             progressBar.setProgress(count * 10)
             setwaterDialogue(waterDialogue, count)
             animateIcons(waterDialogue)
+
 
         }
 
@@ -120,9 +121,9 @@ class WaterTrackerActivity : AppCompatActivity() {
         }
     }
 
-    fun updateWater(waterAdded: Int){
+    fun updateWater(){
 
-        AppData.cupsOfWater+=waterAdded
+        AppData.cupsOfWater = count.toDouble()
         AppData.lastTimeWaterAdded = System.currentTimeMillis()
     }
 }
