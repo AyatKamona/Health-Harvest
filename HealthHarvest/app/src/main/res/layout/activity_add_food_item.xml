@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFoodItemActivity">
+    tools:context=".AddFoodItemActivity"
+    android:background="@android:color/transparent">
 
     <!-- activity_add_food_item.xml -->
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -25,8 +25,9 @@
             android:id="@+id/dateTakenEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:hint="Date Taken" />
+            android:inputType="text"
+            android:hint="Date Taken"
+            android:onClick="showDatePickerDialog" />
 
         <EditText
             android:id="@+id/caloriesEditText"
@@ -36,13 +37,18 @@
             android:hint="Calories" />
 
 
-
         <Button
             android:id="@+id/addFoodButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Add Food" />
+        <Button
+            android:id="@+id/cancelAddFoodButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Cancel" />
     </LinearLayout>
 
 

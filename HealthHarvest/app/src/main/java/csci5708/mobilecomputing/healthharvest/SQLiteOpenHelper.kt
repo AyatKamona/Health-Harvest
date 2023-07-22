@@ -5,6 +5,9 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class FoodDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -120,5 +123,29 @@ class FoodDatabaseHelper(context: Context) :
         val selectionArgs = arrayOf(foodItem.id.toString())
 
         return db.update(TABLE_NAME, contentValues, selection, selectionArgs)
+    }
+
+    fun getTotalCaloriesToday(): Int {
+        val db = this.readableDatabase
+        val columns = arrayOf("SUM($COLUMN_CALORIES)")
+
+        // Get the current date in yyyy-MM-dd format
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+        val selection = "$COLUMN_DATE_TAKEN = ?"
+        val selectionArgs = arrayOf(currentDate)
+
+        val cursor: Cursor? = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null)
+
+        cursor?.let {
+            if (it.moveToFirst()) {
+                val totalCalories = it.getInt(0)
+                it.close()
+                return totalCalories
+            }
+            it.close()
+        }
+
+        return 0 // Return 0 if no calories are consumed today or an error occurs
     }
 }

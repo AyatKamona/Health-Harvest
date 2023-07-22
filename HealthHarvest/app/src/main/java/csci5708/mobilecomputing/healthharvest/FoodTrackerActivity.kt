@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -35,6 +36,14 @@ class FoodTrackerActivity : AppCompatActivity() {
         foodDatabaseHelper = FoodDatabaseHelper(this)
 
         val foodList = foodDatabaseHelper.getAllFoodItems()
+
+        // Get the total calories consumed today
+        val totalCaloriesToday = foodDatabaseHelper.getTotalCaloriesToday()
+
+        // Set the ProgressBar values
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
+        progressBar.max = 2000 // Max value is 2000 (adjust this as needed)
+        progressBar.progress = totalCaloriesToday
 
 
         tableLayout = findViewById(R.id.tableLayout)
