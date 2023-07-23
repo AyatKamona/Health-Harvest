@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditFoodItemActivity"
-    android:background="@android:color/transparent">
+    android:background="@drawable/startbackground">
 
     <!-- activity_edit_food_item.xml -->
     <LinearLayout
@@ -37,12 +37,14 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#68B1DD"
             android:text="Save" />
 
         <Button
             android:id="@+id/discardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#68B1DD"
             android:text="Discard" />
 
     </LinearLayout>
