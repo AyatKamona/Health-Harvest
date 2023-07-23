@@ -37,7 +37,7 @@ class UserDashboard : AppCompatActivity() {
         val welcomeMessage: TextView = findViewById(R.id.welcomeMessage)
         val user = intent.getStringExtra("userName")
 
-        welcomeMessage.text = "Welcome $user!"
+        welcomeMessage.text = "$user's Tree"
 
         var height : TextView = findViewById(R.id.height_tree)
         var tree: ImageView = findViewById(R.id.tree_pic)
