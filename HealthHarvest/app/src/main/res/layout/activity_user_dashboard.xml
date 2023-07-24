@@ -4,94 +4,154 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/startbackground"
     tools:context=".UserDashboard">
-
 
     <TextView
         android:id="@+id/welcomeMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="252dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="96dp"
+        android:layout_marginEnd="76dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
         android:text="User Dashboard"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
-
+        app:layout_constraintVertical_bias="0.001" />
 
     <ImageView
         android:id="@+id/tree_pic"
-        android:layout_width="311dp"
-        android:layout_height="421dp"
-        android:layout_marginTop="144dp"
+        android:layout_width="343dp"
+        android:layout_height="408dp"
         android:foregroundGravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeMessage" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.256" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="175dp"
+        android:layout_height="105dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87"
+        app:srcCompat="@drawable/bordersquare" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="175dp"
+        android:layout_height="105dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87"
+        app:srcCompat="@drawable/bordersquare" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.809"
+        app:srcCompat="@drawable/droplet" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="53dp"
+        android:layout_height="43dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.787"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.808"
+        app:srcCompat="@drawable/height" />
 
     <TextView
         android:id="@+id/height_tree"
-        android:layout_width="104dp"
-        android:layout_height="39dp"
+        android:layout_width="167dp"
+        android:layout_height="45dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
         android:text="TextView"
+        android:textColor="@color/black"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tree_pic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
+        app:layout_constraintHorizontal_bias="0.897"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeMessage"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.877" />
 
     <TextView
         android:id="@+id/whatsNeeded"
-        android:layout_width="104dp"
-        android:layout_height="39dp"
+        android:layout_width="194dp"
+        android:layout_height="29dp"
+        android:background="@drawable/red"
+        android:fontFamily="monospace"
+        android:gravity="center"
         android:text="TextView"
-        android:textSize="10dp"
+        android:textColor="@color/white"
+        android:textSize="15dp"
         android:textStyle="bold"
-        android:textColor="@color/red"
-        app:layout_constraintBottom_toBottomOf="@+id/tree_pic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeMessage"
-        app:layout_constraintVertical_bias="0.093" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
 
     <TextView
         android:id="@+id/soilMoisture"
-        android:layout_width="104dp"
-        android:layout_height="39dp"
+        android:layout_width="163dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
         android:text="TextView"
+        android:textColor="@color/black"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tree_pic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.837"
+        app:layout_constraintHorizontal_bias="0.028"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/welcomeMessage"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemTextColor="@color/black"
+        android:layout_width="413dp"
+        android:layout_height="67dp"
+        android:background="#68B1DD"
         app:itemIconTint="@color/black"
-        android:background="@color/lightgray"
-        app:itemTextAppearance= "@style/NewFontStyle"
+        app:itemTextAppearance="@style/NewFontStyle"
+        app:itemTextColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.995"
+        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/menu" />
 
 

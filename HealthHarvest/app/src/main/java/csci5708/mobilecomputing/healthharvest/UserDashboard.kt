@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -36,7 +37,7 @@ class UserDashboard : AppCompatActivity() {
         val welcomeMessage: TextView = findViewById(R.id.welcomeMessage)
         val user = intent.getStringExtra("userName")
 
-        welcomeMessage.text = "Welcome $user!"
+        welcomeMessage.text = "$user's Tree"
 
         var height : TextView = findViewById(R.id.height_tree)
         var tree: ImageView = findViewById(R.id.tree_pic)
@@ -44,8 +45,6 @@ class UserDashboard : AppCompatActivity() {
         var whatsNeeded: TextView = findViewById(R.id.whatsNeeded)
         setTreeType(tree, height, soilMoisture)
         whatsNeeded.text = AppData.whatsNeeded
-
-
 
 
         bottomNavigationView.setOnItemSelectedListener {
