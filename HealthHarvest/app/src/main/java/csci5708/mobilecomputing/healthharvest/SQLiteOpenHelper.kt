@@ -20,11 +20,10 @@ class FoodDatabaseHelper(context: Context) :
         private const val COLUMN_NAME = "name"
         private const val COLUMN_DATE_TAKEN = "date_taken"
         private const val COLUMN_CALORIES = "calories"
-        private const val COLUMN_OPTION = "option"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTableQuery = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_NAME TEXT, $COLUMN_DATE_TAKEN TEXT, $COLUMN_CALORIES INTEGER, $COLUMN_OPTION TEXT)"
+        val createTableQuery = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_NAME TEXT, $COLUMN_DATE_TAKEN TEXT, $COLUMN_CALORIES INTEGER)"
         db.execSQL(createTableQuery)
     }
 
@@ -47,7 +46,7 @@ class FoodDatabaseHelper(context: Context) :
     fun getAllFoodItems(): List<FoodItem> {
         val foodList = mutableListOf<FoodItem>()
         val db = this.readableDatabase
-        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES, COLUMN_OPTION)
+        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES)
 
         val cursor: Cursor? = db.query(TABLE_NAME, columns, null, null, null, null, null)
         cursor?.let {
@@ -55,14 +54,14 @@ class FoodDatabaseHelper(context: Context) :
             val nameIndex = it.getColumnIndex(COLUMN_NAME)
             val dateTakenIndex = it.getColumnIndex(COLUMN_DATE_TAKEN)
             val caloriesIndex = it.getColumnIndex(COLUMN_CALORIES)
-            val optionIndex = it.getColumnIndex(COLUMN_OPTION)
+
 
             while (it.moveToNext()) {
                 val id = if (idIndex != -1) it.getLong(idIndex) else -1
                 val name = if (nameIndex != -1) it.getString(nameIndex) else ""
                 val dateTaken = if (dateTakenIndex != -1) it.getString(dateTakenIndex) else ""
                 val calories = if (caloriesIndex != -1) it.getInt(caloriesIndex) else 0
-                val option = if (optionIndex != -1) it.getString(optionIndex) else ""
+
 
                 val foodItem = FoodItem(id, name, dateTaken, calories)
                 foodList.add(foodItem)
@@ -82,9 +81,31 @@ class FoodDatabaseHelper(context: Context) :
         return db.delete(TABLE_NAME, selection, selectionArgs)
     }
 
+    fun getAllFoodNames(): Array<String> {
+        val db = this.readableDatabase
+        val columns = arrayOf(COLUMN_NAME)
+
+        val cursor: Cursor? = db.query(TABLE_NAME, columns, null, null, null, null, null)
+        cursor?.let {
+            val nameIndex = it.getColumnIndex(COLUMN_NAME)
+            val foodNames = mutableListOf<String>()
+
+            while (it.moveToNext()) {
+                val name = if (nameIndex != -1) it.getString(nameIndex) else ""
+                foodNames.add(name)
+            }
+
+            it.close()
+            return foodNames.toTypedArray()
+        }
+
+        return emptyArray() // Return an empty array if there are no food items in the database
+    }
+
+
     fun getFoodItem(id: Long): FoodItem? {
         val db = this.readableDatabase
-        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES, COLUMN_OPTION)
+        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES)
 
         val selection = "$COLUMN_ID = ?"
         val selectionArgs = arrayOf(id.toString())
@@ -96,13 +117,13 @@ class FoodDatabaseHelper(context: Context) :
                 val nameIndex = it.getColumnIndex(COLUMN_NAME)
                 val dateTakenIndex = it.getColumnIndex(COLUMN_DATE_TAKEN)
                 val caloriesIndex = it.getColumnIndex(COLUMN_CALORIES)
-                val optionIndex = it.getColumnIndex(COLUMN_OPTION)
+
 
                 val id = if (idIndex != -1) it.getLong(idIndex) else -1
                 val name = if (nameIndex != -1) it.getString(nameIndex) else ""
                 val dateTaken = if (dateTakenIndex != -1) it.getString(dateTakenIndex) else ""
                 val calories = if (caloriesIndex != -1) it.getInt(caloriesIndex) else 0
-                val option = if (optionIndex != -1) it.getString(optionIndex) else ""
+
 
                 return FoodItem(id, name, dateTaken, calories)
             }

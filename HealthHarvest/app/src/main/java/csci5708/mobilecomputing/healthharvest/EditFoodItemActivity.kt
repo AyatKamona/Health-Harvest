@@ -1,19 +1,25 @@
 package csci5708.mobilecomputing.healthharvest
 
+import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
+import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
+import android.widget.TimePicker
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 import org.w3c.dom.Text
+import java.util.Calendar
 
 
 class EditFoodItemActivity : AppCompatActivity() {
     private lateinit var foodDatabaseHelper: FoodDatabaseHelper
     private lateinit var editCaloriesEditText : TextView
     private lateinit var editDateTakenEditText : TextView
-    private lateinit var editFoodNameEditText : TextView
+    private lateinit var editFoodNameEditText : AutoCompleteTextView
     private lateinit var  saveButton : Button
     private lateinit var discardButton : Button
 
@@ -28,7 +34,17 @@ class EditFoodItemActivity : AppCompatActivity() {
         val foodItem = foodDatabaseHelper.getFoodItem(foodItemId)
 
         editCaloriesEditText = findViewById(R.id.editCaloriesEditText)
-        editFoodNameEditText = findViewById(R.id.editFoodNameEditText)
+        // Get all food items from the database
+        val foodList = foodDatabaseHelper.getAllFoodItems()
+
+        // Extract food names from the food items list
+        val foodNames = foodList.map { it.name }.toTypedArray()
+
+        // Create an ArrayAdapter to provide suggestions to the AutoCompleteTextView
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, foodNames)
+
+        // Set the adapter to the AutoCompleteTextView
+        editFoodNameEditText.setAdapter(adapter)
         editDateTakenEditText = findViewById(R.id.editDateTakenEditText)
         saveButton = findViewById(R.id.saveButton)
         discardButton = findViewById(R.id.discardButton)
@@ -66,5 +82,26 @@ class EditFoodItemActivity : AppCompatActivity() {
         val intent = Intent(this, FoodTrackerActivity::class.java)
         startActivity(intent)
         finish() // Call finish to remove EditFoodItemActivity from the back stack
+    }
+
+    // Function to show TimePickerDialog
+    fun showTimePickerDialog(view: View) {
+        val currentTime = Calendar.getInstance()
+        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+        val minute = currentTime.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { _: TimePicker, hourOfDay: Int, minute: Int ->
+                // Format the selected time and set it to the "Date Taken" EditText
+                val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
+                editDateTakenEditText.setText(selectedTime)
+            },
+            hour,
+            minute,
+            true
+        )
+
+        timePickerDialog.show()
     }
 }
