@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.87"
-        app:srcCompat="@drawable/border" />
+        app:srcCompat="@drawable/bordersquare" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.87"
-        app:srcCompat="@drawable/border" />
+        app:srcCompat="@drawable/bordersquare" />
 
     <ImageView
         android:id="@+id/imageView2"
