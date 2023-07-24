@@ -11,8 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 object AppData{
 
+
     const val calorieGoal: Double = 3000.01
-    var calorieAmount: Double = 0.0
 
     const val waterGoal: Double = 8.0
     var cupsOfWater: Double = 0.0
@@ -71,25 +71,16 @@ class UserDashboard : AppCompatActivity() {
 
     fun setTreeType(tree: ImageView, height: TextView, soilMoisture: TextView){
 
+        val foodDatabaseHelper = FoodDatabaseHelper(this)
         var waterTracker : Double = AppData.cupsOfWater/ AppData.waterGoal
-        var calorieTracker: Double = AppData.calorieAmount/AppData.calorieGoal
+        var calorieTracker: Double = foodDatabaseHelper.getTotalCaloriesToday().toDouble()/AppData.calorieGoal
+        //var calorieTracker: Double = 2.0/AppData.calorieGoal
 
         var timeWaterDif = (System.currentTimeMillis() - AppData.lastTimeWaterAdded)/(1000*60*60)
         var timeFoodDif = (System.currentTimeMillis() - AppData.lastTimeFoodAdded)/(1000*60*60)
 
-        if(timeFoodDif > 3 || timeWaterDif > 3){
 
-            if (timeFoodDif > 3 && timeWaterDif > 3) AppData.whatsNeeded = "Food and Water"
-            else if (timeFoodDif > 3) AppData.whatsNeeded = "Food"
-            else AppData.whatsNeeded = "Water"
-
-            if (calorieTracker < 0.33) tree.setImageResource(R.drawable.deadsappling)
-            else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.deadplant)
-            else tree.setImageResource(R.drawable.deadtree)
-
-        }
-
-        else if(timeFoodDif < 0.5 || timeWaterDif < 0.5){
+        if(timeFoodDif < 0.5 || timeWaterDif < 0.5){
 
             AppData.whatsNeeded = ""
 
@@ -106,17 +97,13 @@ class UserDashboard : AppCompatActivity() {
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.sunnysappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.sunnyplant)
                 else tree.setImageResource(R.drawable.sunnytree)
-
             }
 
             else{
-
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.rainsappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.rainplant)
                 else tree.setImageResource(R.drawable.raintree)
-
             }
-
 
         }
 
@@ -141,4 +128,3 @@ class UserDashboard : AppCompatActivity() {
 
     }
 }
-
