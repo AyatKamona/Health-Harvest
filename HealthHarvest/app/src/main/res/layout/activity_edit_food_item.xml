@@ -15,17 +15,20 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/editFoodNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:hint="Food Name" />
 
         <EditText
             android:id="@+id/editDateTakenEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Date Taken" />
+            android:hint="Date Taken"
+            android:onClick="showTimePickerDialog"
+            />
 
         <EditText
             android:id="@+id/editCaloriesEditText"

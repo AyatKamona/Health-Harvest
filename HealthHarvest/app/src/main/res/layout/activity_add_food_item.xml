@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/foodNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="Date Taken"
-            android:onClick="showDatePickerDialog" />
+            android:onClick="showTimePickerDialog" />
 
         <EditText
             android:id="@+id/caloriesEditText"
