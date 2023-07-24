@@ -62,6 +62,7 @@ class WaterTrackerActivity : AppCompatActivity() {
             progressBar.setProgress(count * 10)
             setwaterDialogue(waterDialogue, count)
             animateIcons(waterDialogue)
+            updateWater()
 
 
         }
@@ -72,6 +73,7 @@ class WaterTrackerActivity : AppCompatActivity() {
                 progressBar.setProgress(count * 10)
                 setwaterDialogue(waterDialogue, count)
                 animateIcons(waterDialogue)
+                updateWater()
             }
 
 

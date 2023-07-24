@@ -37,7 +37,7 @@ class FoodDatabaseHelper(context: Context) :
         contentValues.put(COLUMN_NAME, foodItem.name)
         contentValues.put(COLUMN_DATE_TAKEN, foodItem.dateTaken)
         contentValues.put(COLUMN_CALORIES, foodItem.calories)
-
+        AppData.lastTimeFoodAdded = System.currentTimeMillis()
 
         val db = this.writableDatabase
         return db.insert(TABLE_NAME, null, contentValues)

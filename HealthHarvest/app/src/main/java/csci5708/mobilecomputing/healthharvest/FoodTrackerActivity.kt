@@ -115,9 +115,5 @@ class FoodTrackerActivity : AppCompatActivity() {
         }
     }
 
-    fun updateCalorie(calorieAdded: Int){
 
-        AppData.calorieAmount+=calorieAdded
-        AppData.lastTimeFoodAdded = System.currentTimeMillis()
-    }
 }
