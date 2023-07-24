@@ -1,18 +1,20 @@
 *.iml
 .gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+local.properties
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
 .DS_Store
-/build
-/captures
+build
+captures
 .externalNativeBuild
 .cxx
 local.properties
+caches
+HealthHarvest/caches
 
 
 # Created by https://www.gitignore.io/api/java,linux,macos,windows,android,intellij,androidstudio
@@ -350,4 +352,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/java,linux,macos,windows,android,intellij,androidstudio
+kotlin-profile
+native
+wrapper
+daemon
