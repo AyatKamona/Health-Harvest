@@ -87,7 +87,11 @@ class UserDashboard : AppCompatActivity() {
 
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.healthysappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.healthyplant)
-                else tree.setImageResource(R.drawable.healthytree)
+                else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.healthytree)
+                else if (calorieTracker > 1.5){
+                    tree.setImageResource(R.drawable.deadtree)
+                    AppData.whatsNeeded = "Too much food consumption"
+                }
 
             }
 
@@ -95,13 +99,21 @@ class UserDashboard : AppCompatActivity() {
 
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.sunnysappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.sunnyplant)
-                else tree.setImageResource(R.drawable.sunnytree)
+                else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.sunnytree)
+                else if (calorieTracker > 1.5){
+                    tree.setImageResource(R.drawable.deadtree)
+                    AppData.whatsNeeded = "Too much food consumption"
+                }
             }
 
             else{
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.rainsappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.rainplant)
-                else tree.setImageResource(R.drawable.raintree)
+                else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.raintree)
+                else if (calorieTracker > 1.5){
+                    tree.setImageResource(R.drawable.deadtree)
+                    AppData.whatsNeeded = "Too much food consumption"
+                }
             }
 
         }
@@ -110,7 +122,11 @@ class UserDashboard : AppCompatActivity() {
 
             if (calorieTracker < 0.33) tree.setImageResource(R.drawable.regular_sapling)
             else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.regular_plant)
-            else tree.setImageResource(R.drawable.regular_tree)
+            else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.regular_tree)
+            else if (calorieTracker > 1.5){
+                tree.setImageResource(R.drawable.deadtree)
+                AppData.whatsNeeded = "Too much food consumption"
+            }
 
 
         }
@@ -119,7 +135,8 @@ class UserDashboard : AppCompatActivity() {
         else if (waterTracker < 0.3) soilMoisture.text = "Moist Low"
         else if (waterTracker < 0.6) soilMoisture.text = "Moist Okay"
         else if (waterTracker < 0.9) soilMoisture.text = "Moist Great"
-        else soilMoisture.text = "Moist is Perfect"
+        else if (1.5 > waterTracker && waterTracker > 1.0)soilMoisture.text = "Moist is Perfect"
+        else if (waterTracker > 1.5) soilMoisture.text = "Soil is waterlogged"
 
         var heightValue: Double = calorieTracker * 100
         val formattedNumber = String.format("%.2f", heightValue)
