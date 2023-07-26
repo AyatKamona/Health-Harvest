@@ -18,7 +18,7 @@
                     android:radius="10dp"
                     />
                 <size android:height="30dp"/>
-                <solid android:color="@color/mediumblue"/>
+                <solid android:color="#68B1DD"/>
             </shape>
         </scale>
     </item>
