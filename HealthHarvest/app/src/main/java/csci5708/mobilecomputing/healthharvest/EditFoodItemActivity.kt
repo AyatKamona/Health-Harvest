@@ -10,8 +10,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
-import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
-import org.w3c.dom.Text
+import csci5708.mobilecomputing.healthharvest.dataModels.FoodItem
 import java.util.Calendar
 
 
@@ -85,14 +84,14 @@ class EditFoodItemActivity : AppCompatActivity() {
     }
 
     // Function to show TimePickerDialog
-    fun showTimePickerDialog(view: View) {
+    fun showTimePickerDialog() {
         val currentTime = Calendar.getInstance()
         val hour = currentTime.get(Calendar.HOUR_OF_DAY)
         val minute = currentTime.get(Calendar.MINUTE)
 
         val timePickerDialog = TimePickerDialog(
             this,
-            TimePickerDialog.OnTimeSetListener { _: TimePicker, hourOfDay: Int, minute: Int ->
+            { _: TimePicker, hourOfDay: Int, minute: Int ->
                 // Format the selected time and set it to the "Date Taken" EditText
                 val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
                 editDateTakenEditText.setText(selectedTime)
