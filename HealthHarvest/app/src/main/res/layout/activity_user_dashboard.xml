@@ -28,8 +28,8 @@
 
     <ImageView
         android:id="@+id/tree_pic"
-        android:layout_width="329dp"
-        android:layout_height="393dp"
+        android:layout_width="319dp"
+        android:layout_height="375dp"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,8 +104,8 @@
 
     <TextView
         android:id="@+id/whatsNeeded"
-        android:layout_width="396dp"
-        android:layout_height="49dp"
+        android:layout_width="408dp"
+        android:layout_height="56dp"
         android:background="@drawable/bordersquare"
         android:fontFamily="monospace"
         android:gravity="center"
