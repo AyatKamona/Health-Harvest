@@ -1,10 +1,10 @@
-package csci5708.mobilecomputing.healthharvest.Adapters
+package csci5708.mobilecomputing.healthharvest.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
+import csci5708.mobilecomputing.healthharvest.dataModels.FoodItem
 import csci5708.mobilecomputing.healthharvest.R
 
 
@@ -15,7 +15,6 @@ class FoodAdapter(private val foodList: List<FoodItem>) :
         val foodName: TextView = itemView.findViewById(R.id.foodNameTextView)
         val dateTaken: TextView = itemView.findViewById(R.id.dateTakenTextView)
         val calories: TextView = itemView.findViewById(R.id.caloriesTextView)
-        val option: TextView = itemView.findViewById(R.id.optionTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {

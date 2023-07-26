@@ -1,4 +1,4 @@
-package csci5708.mobilecomputing.healthharvest.DataModels
+package csci5708.mobilecomputing.healthharvest.dataModels
 
 data class FoodItem(
     val id: Long,        // Changed type to Long
