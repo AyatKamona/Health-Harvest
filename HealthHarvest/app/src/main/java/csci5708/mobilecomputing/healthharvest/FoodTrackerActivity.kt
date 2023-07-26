@@ -4,11 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TableLayout
-import android.widget.TableRow
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -65,7 +65,7 @@ class FoodTrackerActivity : AppCompatActivity() {
 
 
             foodNameTextView.text = foodItem.name
-            dateTakenTextView.text = foodItem.dateTaken
+            dateTakenTextView.text = foodItem.timeTaken
             caloriesTextView.text = foodItem.calories.toString()
 
             // Handle edit action for this food item
@@ -125,12 +125,65 @@ class FoodTrackerActivity : AppCompatActivity() {
         // Get the updated foodList and update the accordionLayout accordingly
         val updatedFoodList = foodDatabaseHelper.getAllFoodItems()
 
+        // Clear the accordionLayout to remove all existing items
         accordionLayout.removeAllViews()
 
+        // Add a divider between accordion items (optional)
+        val divider = layoutInflater.inflate(R.layout.divider, accordionLayout, false)
+        accordionLayout.addView(divider)
+
         for (foodItem in updatedFoodList) {
-            // Same code as in the for loop above...
+            // Inflate the accordion_item layout for each food item
+            val accordionItemView = layoutInflater.inflate(R.layout.accordion_item, accordionLayout, false)
+
+            // Find views within the accordion_item layout
+            val foodNameTextView: TextView = accordionItemView.findViewById(R.id.foodNameTextView)
+            val dateTakenTextView: TextView = accordionItemView.findViewById(R.id.dateTakenTextView)
+            val caloriesTextView: TextView = accordionItemView.findViewById(R.id.caloriesTextView)
+            val optionLayout: LinearLayout = accordionItemView.findViewById(R.id.optionLayout)
+            val editImageView: ImageView = accordionItemView.findViewById(R.id.editImageView)
+            val deleteImageView: ImageView = accordionItemView.findViewById(R.id.deleteImageView)
+
+            // Set data to views
+            foodNameTextView.text = foodItem.name
+            dateTakenTextView.text = foodItem.timeTaken
+            caloriesTextView.text = foodItem.calories.toString()
+
+            // Set click listeners for edit and delete actions
+            editImageView.setOnClickListener {
+                // Handle edit action for this food item
+                val intent = Intent(this, EditFoodItemActivity::class.java)
+                intent.putExtra("foodItemId", foodItem.id) // Pass the food item id to EditFoodItemActivity
+                startActivity(intent)
+            }
+
+            deleteImageView.setOnClickListener {
+                // Handle delete action for this food item
+                foodDatabaseHelper.deleteFoodItem(foodItem.id)
+                updateAccordionLayout() // Refresh the accordion layout after deletion
+
+                // Recalculate the total calories consumed today and update the ProgressBar
+                val updatedTotalCaloriesToday = foodDatabaseHelper.getTotalCaloriesToday()
+            }
+
+            // Set the click listener for the accordion item to toggle its visibility
+            accordionItemView.setOnClickListener {
+                if (optionLayout.visibility == View.GONE) {
+                    optionLayout.visibility = View.VISIBLE
+                } else {
+                    optionLayout.visibility = View.GONE
+                }
+            }
+
+            // Add the accordion item to the accordionLayout
+            accordionLayout.addView(accordionItemView)
+
+            // Add a divider between accordion items (optional)
+            val divider = layoutInflater.inflate(R.layout.divider, accordionLayout, false)
+            accordionLayout.addView(divider)
         }
     }
+
 
 
 

@@ -1,7 +1,6 @@
 package csci5708.mobilecomputing.healthharvest
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
@@ -9,20 +8,19 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
-import android.widget.TimePicker
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
-import java.util.Calendar
 import java.util.Locale
-
 
 class EditFoodItemActivity : AppCompatActivity() {
     private lateinit var foodDatabaseHelper: FoodDatabaseHelper
-    private lateinit var editCaloriesEditText : TextView
-    private lateinit var editDateTakenEditText : TextView
-    private lateinit var editFoodNameEditText : AutoCompleteTextView
-    private lateinit var  saveButton : Button
-    private lateinit var discardButton : Button
-
+    private lateinit var editCaloriesEditText: TextView
+    private lateinit var editDateTakenEditText: TextView
+    private lateinit var editFoodNameEditText: AutoCompleteTextView
+    private lateinit var editQuantityEditText: TextView
+    private lateinit var editDateEditText: TextView
+    private lateinit var editTimeEditText: TextView
+    private lateinit var saveButton: Button
+    private lateinit var discardButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +32,13 @@ class EditFoodItemActivity : AppCompatActivity() {
         val foodItem = foodDatabaseHelper.getFoodItem(foodItemId)
 
         editCaloriesEditText = findViewById(R.id.editCaloriesEditText)
-        //editFoodNameEditText = findViewById(R.id.editFoodNameEditText)
+        editFoodNameEditText = findViewById(R.id.editFoodNameEditText)
+        editDateTakenEditText = findViewById(R.id.editDateTakenEditText)
+        editQuantityEditText = findViewById(R.id.editQuantityEditText)
+        editDateEditText = findViewById(R.id.editDateEditText)
+        saveButton = findViewById(R.id.saveButton)
+        discardButton = findViewById(R.id.discardButton)
+
         // Get all food items from the database
         val foodList = foodDatabaseHelper.getAllFoodItems()
 
@@ -44,14 +48,8 @@ class EditFoodItemActivity : AppCompatActivity() {
         // Create an ArrayAdapter to provide suggestions to the AutoCompleteTextView
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, foodNames)
 
-        editFoodNameEditText = findViewById(R.id.editFoodNameEditText)
-
         // Set the adapter to the AutoCompleteTextView
         editFoodNameEditText.setAdapter(adapter)
-        editDateTakenEditText = findViewById(R.id.editDateTakenEditText)
-        saveButton = findViewById(R.id.saveButton)
-        discardButton = findViewById(R.id.discardButton)
-
 
         // Set an OnClickListener to show the DatePickerDialog when the dateTakenEditText is clicked
         editDateTakenEditText.setOnClickListener {
@@ -61,11 +59,7 @@ class EditFoodItemActivity : AppCompatActivity() {
         // Pre-fill the text fields with existing record data
         if (foodItem != null) {
             editFoodNameEditText.setText(foodItem.name)
-        }
-        if (foodItem != null) {
-            editDateTakenEditText.setText(foodItem.dateTaken)
-        }
-        if (foodItem != null) {
+            editDateTakenEditText.setText(foodItem.timeTaken)
             editCaloriesEditText.setText(foodItem.calories.toString())
         }
 
@@ -73,11 +67,12 @@ class EditFoodItemActivity : AppCompatActivity() {
             val newName = editFoodNameEditText.text.toString()
             val newDateTaken = editDateTakenEditText.text.toString()
             val newCalories = editCaloriesEditText.text.toString().toInt()
-
+            val quantity = editQuantityEditText.toString().toInt()
+            val timeTake = editTimeEditText.toString()
             // Update the record in the database
-            val updatedFoodItem = FoodItem(foodItemId, newName, newDateTaken, newCalories)
-            foodDatabaseHelper.updateFoodItem(updatedFoodItem)
+            val updatedFoodItem = FoodItem(foodItemId, newName, newDateTaken, newCalories, quantity, timeTake)
 
+            foodDatabaseHelper.updateFoodItem(updatedFoodItem)
             navigateToFoodTrackerActivity()
         }
 
@@ -101,5 +96,4 @@ class EditFoodItemActivity : AppCompatActivity() {
         }, 2023, 0, 1) // Set initial date (2023-01-01)
         datePickerDialog.show()
     }
-
 }
