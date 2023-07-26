@@ -1,12 +1,10 @@
 package csci5708.mobilecomputing.healthharvest
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -16,7 +14,6 @@ object AppData{
     const val calorieGoal: Double = 3000.01
 
     const val waterGoal: Double = 8.0
-    var cupsOfWater: Double = 0.0
 
     var lastTimeFoodAdded: Long = 0
     var lastTimeWaterAdded: Long = 0
@@ -35,14 +32,16 @@ class UserDashboard : AppCompatActivity() {
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         val welcomeMessage: TextView = findViewById(R.id.welcomeMessage)
-        val user = intent.getStringExtra("userName")
+        // fetch the username from shared preferences
+        val sharedPref = getSharedPreferences("user", MODE_PRIVATE)
+        val user = sharedPref.getString("userName", "User")
 
         welcomeMessage.text = "$user's Tree"
 
-        var height : TextView = findViewById(R.id.height_tree)
-        var tree: ImageView = findViewById(R.id.tree_pic)
-        var soilMoisture: TextView = findViewById(R.id.soilMoisture)
-        var whatsNeeded: TextView = findViewById(R.id.whatsNeeded)
+        val height : TextView = findViewById(R.id.height_tree)
+        val tree: ImageView = findViewById(R.id.tree_pic)
+        val soilMoisture: TextView = findViewById(R.id.soilMoisture)
+        val whatsNeeded: TextView = findViewById(R.id.whatsNeeded)
         setTreeType(tree, height, soilMoisture)
         whatsNeeded.text = AppData.whatsNeeded
 
@@ -71,12 +70,13 @@ class UserDashboard : AppCompatActivity() {
     fun setTreeType(tree: ImageView, height: TextView, soilMoisture: TextView){
 
         val foodDatabaseHelper = FoodDatabaseHelper(this)
-        var waterTracker : Double = AppData.cupsOfWater/ AppData.waterGoal
-        var calorieTracker: Double = foodDatabaseHelper.getTotalCaloriesToday().toDouble()/AppData.calorieGoal
+        val waterDatabaseHelper = WaterDatabaseHelper(this)
+        val waterTracker : Double = waterDatabaseHelper.getTotalWaterIntakeForToday().toDouble()/ AppData.waterGoal
+        val calorieTracker: Double = foodDatabaseHelper.getTotalCaloriesToday().toDouble()/AppData.calorieGoal
         //var calorieTracker: Double = 2.0/AppData.calorieGoal
 
-        var timeWaterDif = (System.currentTimeMillis() - AppData.lastTimeWaterAdded)/(1000*60*60)
-        var timeFoodDif = (System.currentTimeMillis() - AppData.lastTimeFoodAdded)/(1000*60*60)
+        val timeWaterDif = (System.currentTimeMillis() - AppData.lastTimeWaterAdded)/(1000*60*60)
+        val timeFoodDif = (System.currentTimeMillis() - AppData.lastTimeFoodAdded)/(1000*60*60)
 
 
         if(timeFoodDif < 0.5 || timeWaterDif < 0.5){
@@ -138,7 +138,7 @@ class UserDashboard : AppCompatActivity() {
         else if (1.5 > waterTracker && waterTracker > 1.0)soilMoisture.text = "Moist is Perfect"
         else if (waterTracker > 1.5) soilMoisture.text = "Soil is waterlogged"
 
-        var heightValue: Double = calorieTracker * 100
+        val heightValue: Double = calorieTracker * 100
         val formattedNumber = String.format("%.2f", heightValue)
         height.text = "Height: $formattedNumber inches"
 
