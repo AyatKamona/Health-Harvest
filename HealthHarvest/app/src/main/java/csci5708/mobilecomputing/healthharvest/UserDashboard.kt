@@ -131,13 +131,24 @@ class UserDashboard : AppCompatActivity() {
 
         }
 
-        if(waterTracker == 0.0) soilMoisture.text = "Moist Very Low"
-        else if (waterTracker < 0.3) soilMoisture.text = "Moist Low"
-        else if (waterTracker < 0.6) soilMoisture.text = "Moist Okay"
-        else if (waterTracker < 0.9) soilMoisture.text = "Moist Great"
-        else if (1.5 > waterTracker && waterTracker > 1.0)soilMoisture.text = "Moist is Perfect"
-        else if (waterTracker > 1.5) soilMoisture.text = "Soil is waterlogged"
-
+        if(waterTracker == 0.0) {
+            soilMoisture.text = "Moist Very Low"
+        }
+        else if(waterTracker > 0.0 && waterTracker <= 0.3){
+            soilMoisture.text = "Moist Low"
+        }
+        else if(waterTracker > 0.3 && waterTracker <= 0.6){
+            soilMoisture.text = "Moist Okay"
+        }
+        else if(waterTracker > 0.6 && waterTracker <= 0.9){
+            soilMoisture.text = "Moist Great"
+        }
+        else if(waterTracker > 0.9 && waterTracker <= 1.2){
+            soilMoisture.text = "Moist is Perfect"
+        }
+        else if(waterTracker > 1.2){
+            soilMoisture.text = "Soil is waterlogged"
+        }
         val heightValue: Double = calorieTracker * 100
         val formattedNumber = String.format("%.2f", heightValue)
         height.text = "Height: $formattedNumber inches"

@@ -120,7 +120,9 @@ class WaterTrackerActivity : AppCompatActivity() {
     }
 
     private fun setwaterDialogue(waterDialogue: TextView, count: Int) {
-        if (count.equals(1)) {
+        if (count.equals(0)) {
+            waterDialogue.setText(getString(R.string.dialogue0))
+        } else if (count.equals(1)) {
             waterDialogue.setText(getString(R.string.dialogue1))
         } else if (count.equals(2)) {
             waterDialogue.setText(getString(R.string.dialogue2))

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">HealthHarvest</string>
+    <string name="dialogue0">Let start it!</string>
     <string name="dialogue1">Good Work! \nKeep going!</string>
     <string name="dialogue2">I can see! \nYou are motivated!</string>
     <string name="dialogue3">Yess! \nStay hydrated!</string>
