@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
+import csci5708.mobilecomputing.healthharvest.dataModels.FoodItem
 import java.util.Calendar
 import kotlin.random.Random
 import android.app.TimePickerDialog
