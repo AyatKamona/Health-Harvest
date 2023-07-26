@@ -100,7 +100,7 @@ class UserDashboard : AppCompatActivity() {
                 else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.healthytree)
                 else if (calorieTracker > 1.5){
                     tree.setImageResource(R.drawable.deadtree)
-                    AppData.whatsNeeded = "Too much food consumption"
+                    AppData.whatsNeeded = "Hey there! Your tree is feeling a bit stuffed. Remember, moderation is key to a healthy lifestyle."
                 }
 
             }
@@ -112,7 +112,7 @@ class UserDashboard : AppCompatActivity() {
                 else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.sunnytree)
                 else if (calorieTracker > 1.5){
                     tree.setImageResource(R.drawable.deadtree)
-                    AppData.whatsNeeded = "Too much food consumption"
+                    AppData.whatsNeeded = "Hey there! Your tree is feeling a bit stuffed. Remember, moderation is key to a healthy lifestyle."
                 }
             }
 
@@ -122,7 +122,7 @@ class UserDashboard : AppCompatActivity() {
                 else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.raintree)
                 else if (calorieTracker > 1.5){
                     tree.setImageResource(R.drawable.deadtree)
-                    AppData.whatsNeeded = "Too much food consumption"
+                    AppData.whatsNeeded = "Hey there! Your tree is feeling a bit stuffed. Remember, moderation is key to a healthy lifestyle."
                 }
             }
 
@@ -135,7 +135,7 @@ class UserDashboard : AppCompatActivity() {
             else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.regular_tree)
             else if (calorieTracker > 1.5){
                 tree.setImageResource(R.drawable.deadtree)
-                AppData.whatsNeeded = "Too much food consumption"
+                AppData.whatsNeeded = "Your tree is feeling stuffed. Remember, moderation is key to a healthy lifestyle."
             }
 
 
@@ -162,6 +162,11 @@ class UserDashboard : AppCompatActivity() {
         val heightValue: Double = calorieTracker * 100
         val formattedNumber = String.format("%.2f", heightValue)
         height.text = "Height: $formattedNumber inches"
+
+        if(waterTracker < 0.6 && calorieTracker < 0.9) AppData.whatsNeeded = "Don't forget to eat a balanced meal and drink enough water to see your tree flourish"
+        else if (waterTracker < 0.6 && 0.9 < calorieTracker && calorieTracker < 1.5)  AppData.whatsNeeded = "Take a sip of water now and watch your tree thrive!"
+        else if(waterTracker >= 0.6 && calorieTracker < 0.9) AppData.whatsNeeded = "Remember to fuel your body with nutritious food to help your tree flourish!"
+        else if (waterTracker >= 0.6 && 0.9 < calorieTracker && calorieTracker < 1.5) AppData.whatsNeeded = "Great job! Your tree is in full bloom and so are you!"
 
     }
 }
