@@ -46,25 +46,32 @@ class WaterTrackerActivity : AppCompatActivity() {
         animateIcons(waterDialogue)
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.menu.findItem(R.id.water).isChecked = true
 
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.dashboard -> {
                     val intent = Intent(this@WaterTrackerActivity, UserDashboard::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                     true
                 }
 
                 R.id.food -> {
                     val intent = Intent(this@WaterTrackerActivity, FoodTrackerActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                     true
                 }
 
                 R.id.water -> {
                     val intent = Intent(this@WaterTrackerActivity, WaterTrackerActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                     true
                 }
             }
