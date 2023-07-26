@@ -278,11 +278,27 @@ class WaterDatabaseHelper(context: Context) :
         val db = this.readableDatabase
         val columns = arrayOf("COUNT($COLUMN_ID)")
 
-        // Get the current date in yyyy-MM-dd format
-        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val selection = "$COLUMN_DATE_TAKEN between ? and ?"
+        // get the start and end of today in milliseconds using system time
+        val millisecondsStartOfToday = LocalDateTime.of(
+            LocalDateTime.now().year,
+            LocalDateTime.now().month,
+            LocalDateTime.now().dayOfMonth,
+            0,
+            0,
+            0
+        ).toEpochSecond(java.time.ZoneOffset.UTC) * 1000
 
-        val selection = "$COLUMN_DATE_TAKEN = ?"
-        val selectionArgs = arrayOf(currentDate)
+        val millisecondsEndOfToday = LocalDateTime.of(
+            LocalDateTime.now().year,
+            LocalDateTime.now().month,
+            LocalDateTime.now().dayOfMonth,
+            23,
+            59,
+            59
+        ).toEpochSecond(java.time.ZoneOffset.UTC) * 1000
+
+        val selectionArgs = arrayOf(millisecondsStartOfToday.toString(), millisecondsEndOfToday.toString())
 
         val cursor: Cursor? = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null)
 
