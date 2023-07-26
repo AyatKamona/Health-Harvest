@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:hint="Date Taken"
-            android:onClick="showTimePickerDialog" />
+/>
 
         <EditText
             android:id="@+id/caloriesEditText"

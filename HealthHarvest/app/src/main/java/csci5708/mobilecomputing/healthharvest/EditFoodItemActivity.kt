@@ -1,5 +1,6 @@
 package csci5708.mobilecomputing.healthharvest
 
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.TextView
 import android.widget.TimePicker
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 import java.util.Calendar
+import java.util.Locale
 
 
 class EditFoodItemActivity : AppCompatActivity() {
@@ -50,6 +52,12 @@ class EditFoodItemActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.saveButton)
         discardButton = findViewById(R.id.discardButton)
 
+
+        // Set an OnClickListener to show the DatePickerDialog when the dateTakenEditText is clicked
+        editDateTakenEditText.setOnClickListener {
+            showDatePickerDialog()
+        }
+
         // Pre-fill the text fields with existing record data
         if (foodItem != null) {
             editFoodNameEditText.setText(foodItem.name)
@@ -85,24 +93,13 @@ class EditFoodItemActivity : AppCompatActivity() {
         finish() // Call finish to remove EditFoodItemActivity from the back stack
     }
 
-    // Function to show TimePickerDialog
-    fun showTimePickerDialog() {
-        val currentTime = Calendar.getInstance()
-        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
-        val minute = currentTime.get(Calendar.MINUTE)
-
-        val timePickerDialog = TimePickerDialog(
-            this,
-            { _: TimePicker, hourOfDay: Int, minute: Int ->
-                // Format the selected time and set it to the "Date Taken" EditText
-                val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
-                editDateTakenEditText.setText(selectedTime)
-            },
-            hour,
-            minute,
-            true
-        )
-
-        timePickerDialog.show()
+    fun showDatePickerDialog() {
+        val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
+            // Handle the selected date (year, month, and dayOfMonth)
+            val formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth)
+            editDateTakenEditText.text = formattedDate
+        }, 2023, 0, 1) // Set initial date (2023-01-01)
+        datePickerDialog.show()
     }
+
 }

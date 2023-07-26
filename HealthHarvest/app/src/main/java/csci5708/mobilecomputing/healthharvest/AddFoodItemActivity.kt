@@ -63,6 +63,10 @@ class AddFoodItemActivity : AppCompatActivity() {
             finish()
         }
 
+        dateTakenEditText.setOnClickListener {
+            showDatePickerDialog(dateTakenEditText)
+        }
+
 
     }
 
@@ -116,26 +120,5 @@ class AddFoodItemActivity : AppCompatActivity() {
             day
         )
         datePickerDialog.show()
-    }
-
-    // Function to show TimePickerDialog
-    fun showTimePickerDialog(view: View) {
-        val currentTime = Calendar.getInstance()
-        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
-        val minute = currentTime.get(Calendar.MINUTE)
-
-        val timePickerDialog = TimePickerDialog(
-            this,
-            TimePickerDialog.OnTimeSetListener { _: TimePicker, hourOfDay: Int, minute: Int ->
-                // Format the selected time and set it to the "Date Taken" EditText
-                val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
-                dateTakenEditText.setText(selectedTime)
-            },
-            hour,
-            minute,
-            true
-        )
-
-        timePickerDialog.show()
     }
 }
