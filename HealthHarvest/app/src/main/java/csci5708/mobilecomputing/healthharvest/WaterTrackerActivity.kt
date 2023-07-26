@@ -2,6 +2,9 @@ package csci5708.mobilecomputing.healthharvest
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,8 +13,12 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.RemoteViews
 import android.widget.TextView
+import androidx.core.app.NotificationCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import csci5708.mobilecomputing.healthharvest.receivers.WaterNotificationActionReceiver
+import csci5708.mobilecomputing.healthharvest.services.WaterCounterNotificationService
 
 class WaterTrackerActivity : AppCompatActivity() {
 
@@ -71,6 +78,7 @@ class WaterTrackerActivity : AppCompatActivity() {
             progressBar.setProgress(count * 10)
             setwaterDialogue(waterDialogue, count)
             animateIcons(waterDialogue)
+            updateNotification(this, count)
 
 
         }
@@ -83,6 +91,7 @@ class WaterTrackerActivity : AppCompatActivity() {
                 progressBar.setProgress(count * 10)
                 setwaterDialogue(waterDialogue, count)
                 animateIcons(waterDialogue)
+                updateNotification(this, count)
             }
 
 
@@ -130,5 +139,41 @@ class WaterTrackerActivity : AppCompatActivity() {
         } else {
             waterDialogue.setText(getString(R.string.dialogue9))
         }
+    }
+
+    private fun getPendingIntentForAction(context: Context, action: String): PendingIntent {
+        val intent = Intent(context, WaterNotificationActionReceiver::class.java).apply {
+            this.action = action
+        }
+
+        // Use PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }
+
+    private fun updateNotification(context: Context, count: Int) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val contentView = RemoteViews(context.packageName, R.layout.notification_layout)
+
+        contentView.setOnClickPendingIntent(R.id.btnIncrease, getPendingIntentForAction(context,
+            WaterCounterNotificationService.ACTION_INCREASE
+        ))
+        contentView.setOnClickPendingIntent(R.id.btnDecrease, getPendingIntentForAction(context,
+            WaterCounterNotificationService.ACTION_DECREASE
+        ))
+
+
+        // Update the count in the notification layout
+        contentView.setTextViewText(R.id.txtCount, count.toString())
+
+        // Rebuild the notification with the updated layout
+        val notification = NotificationCompat.Builder(context, WaterCounterNotificationService.CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setCustomContentView(contentView)
+            .setOngoing(true)
+            .setAutoCancel(false)
+            .build()
+
+        notificationManager.notify(WaterCounterNotificationService.NOTIFICATION_ID, notification)
     }
 }
