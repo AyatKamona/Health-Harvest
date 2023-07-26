@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import csci5708.mobilecomputing.healthharvest.AddFoodItemActivity
 import csci5708.mobilecomputing.healthharvest.R
 import csci5708.mobilecomputing.healthharvest.WaterDatabaseHelper
 import csci5708.mobilecomputing.healthharvest.services.WaterCounterNotificationService
@@ -51,10 +52,16 @@ class WaterNotificationActionReceiver : BroadcastReceiver() {
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
+    private fun getPendingIntentForActivity(context: Context): PendingIntent {
+        val intent = Intent(context, AddFoodItemActivity::class.java)
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }
+
     private fun updateNotification(context: Context, count: Int) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val contentView = RemoteViews(context.packageName, R.layout.notification_layout)
+
 
         contentView.setOnClickPendingIntent(R.id.btnIncrease, getPendingIntentForAction(context,
             WaterCounterNotificationService.ACTION_INCREASE
@@ -62,6 +69,8 @@ class WaterNotificationActionReceiver : BroadcastReceiver() {
         contentView.setOnClickPendingIntent(R.id.btnDecrease, getPendingIntentForAction(context,
             WaterCounterNotificationService.ACTION_DECREASE
         ))
+
+        contentView.setOnClickPendingIntent(R.id.addFoodButton, getPendingIntentForActivity(context))
 
 
         // Update the count in the notification layout

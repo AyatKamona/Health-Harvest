@@ -158,6 +158,10 @@ class WaterTrackerActivity : AppCompatActivity() {
         // Use PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
+    private fun getPendingIntentForActivity(context: Context): PendingIntent {
+        val intent = Intent(context, AddFoodItemActivity::class.java)
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }
 
     private fun updateNotification(context: Context, count: Int) {
         val notificationManager =
@@ -170,6 +174,8 @@ class WaterTrackerActivity : AppCompatActivity() {
         contentView.setOnClickPendingIntent(R.id.btnDecrease, getPendingIntentForAction(context,
             WaterCounterNotificationService.ACTION_DECREASE
         ))
+
+        contentView.setOnClickPendingIntent(R.id.addFoodButton, getPendingIntentForActivity(context))
 
 
         // Update the count in the notification layout
