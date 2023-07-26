@@ -170,6 +170,26 @@ class FoodDatabaseHelper(context: Context) :
 
         return 0 // Return 0 if no calories are consumed today or an error occurs
     }
+
+    fun getLastFoodIntakeInMilliSecondsSinceEpochs(): Long {
+        val db = this.readableDatabase
+        val columns = arrayOf(COLUMN_NAME)
+
+        val cursor: Cursor? = db.query(FoodDatabaseHelper.TABLE_NAME, columns, null, null, null, null, "${FoodDatabaseHelper.COLUMN_DATE_TAKEN} DESC")
+
+        cursor?.let {
+            if (it.moveToFirst()) {
+                val dateTakenIndex = it.getColumnIndex(FoodDatabaseHelper.COLUMN_DATE_TAKEN)
+
+                val dateTaken = if (dateTakenIndex != -1) it.getLong(dateTakenIndex) else -1
+
+                it.close()
+                return dateTaken
+            }
+            it.close()
+        }
+        return 0 // Return 0 if no water intake is found for today or an error occurs
+    }
 }
 
 class WaterDatabaseHelper(context: Context) :

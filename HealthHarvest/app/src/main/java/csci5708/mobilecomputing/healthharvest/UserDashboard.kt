@@ -77,9 +77,10 @@ class UserDashboard : AppCompatActivity() {
         //var calorieTracker: Double = 2.0/AppData.calorieGoal
 
         val lastWaterConsumption = waterDatabaseHelper.getLastWaterIntakeInMilliSecondsSinceEpochs()
+        val lastFoodConsumption = foodDatabaseHelper.getLastFoodIntakeInMilliSecondsSinceEpochs()
         Log.w("water-consumption", "last water consumption: $lastWaterConsumption", )
         val timeWaterDif = (System.currentTimeMillis() - lastWaterConsumption)/(1000*60*60)
-        val timeFoodDif = (System.currentTimeMillis() - AppData.lastTimeFoodAdded)/(1000*60*60)
+        val timeFoodDif = (System.currentTimeMillis() - lastFoodConsumption)/(1000*60*60)
 
 
         if(timeFoodDif < 0.5 || timeWaterDif < 0.5){

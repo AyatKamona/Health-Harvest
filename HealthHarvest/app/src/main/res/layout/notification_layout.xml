@@ -11,14 +11,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="20"
         android:layout_marginRight="15dp"
-        android:text="add food" />
+        android:text="add food"
+        android:fontFamily="@font/robotomono"/>
 
     <Button
         android:id="@+id/btnDecrease"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="20"
-        android:text="-" />
+        android:text="- " />
     <TextView
         android:id="@+id/txtCount"
         android:layout_width="wrap_content"
