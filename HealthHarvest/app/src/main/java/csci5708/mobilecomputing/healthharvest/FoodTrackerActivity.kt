@@ -3,6 +3,7 @@ package csci5708.mobilecomputing.healthharvest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -16,11 +17,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class FoodTrackerActivity : AppCompatActivity() {
     private lateinit var tableLayout: TableLayout
     private lateinit var foodDatabaseHelper: FoodDatabaseHelper
+    private lateinit var accordionLayout: LinearLayout
+    private lateinit var layoutInflater: LayoutInflater
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_tracker)
+
+        accordionLayout = findViewById(R.id.accordionLayout)
+        layoutInflater = LayoutInflater.from(this)
+
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -43,50 +51,53 @@ class FoodTrackerActivity : AppCompatActivity() {
         progressBar.progress = totalCaloriesToday
 
 
-        tableLayout = findViewById(R.id.tableLayout)
+        accordionLayout.removeAllViews()
 
         for (foodItem in foodList) {
-            val tableRow = TableRow(this)
+            val accordionItemView = layoutInflater.inflate(R.layout.accordion_item, null)
 
-            val foodNameTextView = TextView(this)
+            val foodNameTextView: TextView = accordionItemView.findViewById(R.id.foodNameTextView)
+            val dateTakenTextView: TextView = accordionItemView.findViewById(R.id.dateTakenTextView)
+            val caloriesTextView: TextView = accordionItemView.findViewById(R.id.caloriesTextView)
+            val optionLayout: LinearLayout = accordionItemView.findViewById(R.id.optionLayout)
+            val editImageView: ImageView = accordionItemView.findViewById(R.id.editImageView)
+            val deleteImageView: ImageView = accordionItemView.findViewById(R.id.deleteImageView)
+
+
             foodNameTextView.text = foodItem.name
-            tableRow.addView(foodNameTextView)
-
-            val dateTakenTextView = TextView(this)
             dateTakenTextView.text = foodItem.dateTaken
-            tableRow.addView(dateTakenTextView)
-
-            val caloriesTextView = TextView(this)
             caloriesTextView.text = foodItem.calories.toString()
-            tableRow.addView(caloriesTextView)
 
-            val optionLayout = LinearLayout(this)
-            optionLayout.orientation = LinearLayout.HORIZONTAL
-
-            val editImageView = ImageView(this)
-            editImageView.setImageResource(R.drawable.ic_view)
+            // Handle edit action for this food item
             editImageView.setOnClickListener {
-                // Handle edit action for this food item
                 val intent = Intent(this, EditFoodItemActivity::class.java)
                 intent.putExtra("foodItemId", foodItem.id) // Pass the food item id to EditFoodItemActivity
                 startActivity(intent)
             }
-            optionLayout.addView(editImageView)
 
-            val deleteImageView = ImageView(this)
-            deleteImageView.setImageResource(R.drawable.ic_delete)
+            // Handle delete action for this food item
             deleteImageView.setOnClickListener {
-                // Handle delete action for this food item
                 foodDatabaseHelper.deleteFoodItem(foodItem.id)
-                tableLayout.removeView(tableRow) // Remove the row from the TableLayout
+
+                // Recalculate the total calories consumed today
+                val updatedTotalCaloriesToday = foodDatabaseHelper.getTotalCaloriesToday()
+
+                // Update the ProgressBar
+                progressBar.progress = updatedTotalCaloriesToday
+
+                // Update the accordionLayout by re-populating the accordion items
+                updateAccordionLayout()
             }
-            optionLayout.addView(deleteImageView)
 
-            tableRow.addView(optionLayout)
+            // Add the accordion item view to the accordionLayout
+            accordionLayout.addView(accordionItemView)
 
-            // Add the row to the TableLayout
-            tableLayout.addView(tableRow)
+            // Add a divider between accordion items
+            val divider = layoutInflater.inflate(R.layout.divider, null)
+            accordionLayout.addView(divider)
         }
+
+
 
         //Bottom Navigation bar
         bottomNavigationView.setOnItemSelectedListener {
@@ -109,6 +120,19 @@ class FoodTrackerActivity : AppCompatActivity() {
             true
         }
     }
+
+    fun updateAccordionLayout() {
+        // Get the updated foodList and update the accordionLayout accordingly
+        val updatedFoodList = foodDatabaseHelper.getAllFoodItems()
+
+        accordionLayout.removeAllViews()
+
+        for (foodItem in updatedFoodList) {
+            // Same code as in the for loop above...
+        }
+    }
+
+
 
 
 }

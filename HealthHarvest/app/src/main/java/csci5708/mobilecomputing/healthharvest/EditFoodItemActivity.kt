@@ -4,13 +4,12 @@ import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
-import csci5708.mobilecomputing.healthharvest.dataModels.FoodItem
+import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 import java.util.Calendar
 
 
@@ -33,6 +32,7 @@ class EditFoodItemActivity : AppCompatActivity() {
         val foodItem = foodDatabaseHelper.getFoodItem(foodItemId)
 
         editCaloriesEditText = findViewById(R.id.editCaloriesEditText)
+        //editFoodNameEditText = findViewById(R.id.editFoodNameEditText)
         // Get all food items from the database
         val foodList = foodDatabaseHelper.getAllFoodItems()
 
@@ -41,6 +41,8 @@ class EditFoodItemActivity : AppCompatActivity() {
 
         // Create an ArrayAdapter to provide suggestions to the AutoCompleteTextView
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, foodNames)
+
+        editFoodNameEditText = findViewById(R.id.editFoodNameEditText)
 
         // Set the adapter to the AutoCompleteTextView
         editFoodNameEditText.setAdapter(adapter)

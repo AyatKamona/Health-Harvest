@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import csci5708.mobilecomputing.healthharvest.dataModels.FoodItem
+import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -156,7 +156,7 @@ class FoodDatabaseHelper(context: Context) :
         val selection = "$COLUMN_DATE_TAKEN = ?"
         val selectionArgs = arrayOf(currentDate)
 
-        val cursor: Cursor? = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null)
+        val cursor: Cursor? = db.query(TABLE_NAME, columns, null, null, null, null, null)
 
         cursor?.let {
             if (it.moveToFirst()) {
