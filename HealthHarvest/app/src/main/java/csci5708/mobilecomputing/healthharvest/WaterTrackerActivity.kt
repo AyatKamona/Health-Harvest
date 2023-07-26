@@ -90,6 +90,7 @@ class WaterTrackerActivity : AppCompatActivity() {
                 count = waterDatabaseHelper.getTotalWaterIntakeForToday()
                 tvtext.setText("" + count)
                 setwaterDialogue(waterDialogue, count)
+                setwaterImage(waterDialogue, count)
                 updateNotification(this, count)
             }
 
@@ -97,15 +98,39 @@ class WaterTrackerActivity : AppCompatActivity() {
         }
     }
 
-    private fun setwaterDialogue(waterDialogue: TextView, count: Int) {
-            val maxWaterLevel = 8
-            val clampedCount = count.coerceIn(0, maxWaterLevel)
+    private fun setwaterImage(waterDialogue: TextView, count: Int) {
+        val maxWaterLevel = 8
+        val clampedCount = count.coerceIn(0, maxWaterLevel)
 
-            // Use Glide to load the image into the ImageView with Crossfade transition
-            Glide.with(this)
-                .load(waveImages[clampedCount])
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(waterFill)
+        // Use Glide to load the image into the ImageView with Crossfade transition
+        Glide.with(this)
+            .load(waveImages[clampedCount])
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(waterFill)
+    }
+
+    private fun setwaterDialogue(waterDialogue: TextView, count: Int) {
+        if (count.equals(0)) {
+            waterDialogue.setText(getString(R.string.dialogue0))
+        } else if (count.equals(1)) {
+            waterDialogue.setText(getString(R.string.dialogue1))
+        } else if (count.equals(2)) {
+            waterDialogue.setText(getString(R.string.dialogue2))
+        } else if (count.equals(3)) {
+            waterDialogue.setText(getString(R.string.dialogue3))
+        } else if (count.equals(4)) {
+            waterDialogue.setText(getString(R.string.dialogue4))
+        } else if (count.equals(5)) {
+            waterDialogue.setText(getString(R.string.dialogue5))
+        } else if (count.equals(6)) {
+            waterDialogue.setText(getString(R.string.dialogue6))
+        } else if (count.equals(7)) {
+            waterDialogue.setText(getString(R.string.dialogue7))
+        } else if (count.equals(8)) {
+            waterDialogue.setText(getString(R.string.dialogue8))
+        } else {
+            waterDialogue.setText(getString(R.string.dialogue9))
+        }
         }
 
     override fun onDestroy() {
