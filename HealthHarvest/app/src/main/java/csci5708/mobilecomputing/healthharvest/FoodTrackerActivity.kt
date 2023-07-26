@@ -9,13 +9,8 @@ import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import csci5708.mobilecomputing.healthharvest.Adapters.FoodAdapter
-import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
-
 
 
 class FoodTrackerActivity : AppCompatActivity() {
