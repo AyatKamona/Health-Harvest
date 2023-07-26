@@ -51,17 +51,23 @@ class UserDashboard : AppCompatActivity() {
             when (it.itemId) {
                 R.id.dashboard -> {
                     val intent = Intent(this@UserDashboard, UserDashboard::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                 }
 
                 R.id.food -> {
                     val intent = Intent(this@UserDashboard, FoodTrackerActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                 }
 
                 R.id.water -> {
                     val intent = Intent(this@UserDashboard, WaterTrackerActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                 }
             }
             true
