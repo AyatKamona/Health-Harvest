@@ -47,9 +47,11 @@ class WaterTrackerActivity : AppCompatActivity() {
         tvtext.setText("" + count)
         waterDialogue.setText("Let's start!")
         setwaterDialogue(waterDialogue, count)
+        setwaterImage(waterDialogue, count)
+        animateIcons(waterDialogue)
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
-
+        bottomNavigationView.menu.findItem(R.id.water).isChecked = true
 
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
@@ -79,6 +81,8 @@ class WaterTrackerActivity : AppCompatActivity() {
             count = waterDatabaseHelper.getTotalWaterIntakeForToday()
             tvtext.setText("" + count)
             setwaterDialogue(waterDialogue, count)
+            setwaterImage(waterDialogue, count)
+            animateIcons(waterDialogue)
             updateNotification(this, count)
 
 
@@ -91,11 +95,28 @@ class WaterTrackerActivity : AppCompatActivity() {
                 tvtext.setText("" + count)
                 setwaterDialogue(waterDialogue, count)
                 setwaterImage(waterDialogue, count)
+                animateIcons(waterDialogue)
                 updateNotification(this, count)
             }
 
 
         }
+    }
+    private fun animateIcons(waterDialogue: TextView) {
+
+        val starScaleX = ObjectAnimator.ofFloat(waterDialogue, View.SCALE_X, 1f, 1.2f, 1f)
+        starScaleX.duration = 500
+        starScaleX.repeatCount = 1
+        starScaleX.repeatMode = ObjectAnimator.REVERSE
+
+        val starScaleY = ObjectAnimator.ofFloat(waterDialogue, View.SCALE_Y, 1f, 1.2f, 1f)
+        starScaleY.duration = 500
+        starScaleY.repeatCount = 1
+        starScaleY.repeatMode = ObjectAnimator.REVERSE
+
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(starScaleX, starScaleY)
+        animatorSet.start()
     }
 
     private fun setwaterImage(waterDialogue: TextView, count: Int) {
@@ -131,6 +152,7 @@ class WaterTrackerActivity : AppCompatActivity() {
         } else {
             waterDialogue.setText(getString(R.string.dialogue9))
         }
+
         }
 
     override fun onDestroy() {
@@ -147,6 +169,10 @@ class WaterTrackerActivity : AppCompatActivity() {
         // Use PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
+    private fun getPendingIntentForActivity(context: Context): PendingIntent {
+        val intent = Intent(context, AddFoodItemActivity::class.java)
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+    }
 
     private fun updateNotification(context: Context, count: Int) {
         val notificationManager =
@@ -160,6 +186,7 @@ class WaterTrackerActivity : AppCompatActivity() {
             WaterCounterNotificationService.ACTION_DECREASE
         ))
 
+        contentView.setOnClickPendingIntent(R.id.addFoodButton, getPendingIntentForActivity(context))
 
         // Update the count in the notification layout
         contentView.setTextViewText(R.id.txtCount, count.toString())

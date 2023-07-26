@@ -19,17 +19,16 @@
         app:layout_constraintVertical_bias="0.0" />
 
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="94dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="528dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/waterFill"
+        app:layout_constraintBottom_toTopOf="@+id/btnplus"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/waterDialogue"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.937">
 
         <TextView
             android:id="@+id/tvtext"
@@ -39,11 +38,10 @@
             android:paddingLeft="30dp"
             android:paddingTop="15dp"
             android:text="WT"
+            android:textColor="@color/black"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,13 +49,12 @@
             android:fontFamily="monospace"
             android:paddingTop="15dp"
             android:text="/8"
+            android:textColor="@color/black"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/tvtext"
+            app:layout_constraintTop_toTopOf="@+id/tvtext" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnplus"
@@ -70,10 +67,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.278"
+        app:layout_constraintHorizontal_bias="0.309"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.617" />
 
     <Button
         android:id="@+id/btnminus"
@@ -86,10 +83,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintHorizontal_bias="0.348"
         app:layout_constraintStart_toEndOf="@+id/btnplus"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.244" />
+        app:layout_constraintVertical_bias="0.617" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -114,17 +111,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:backgroundTint="#68B1DD"
         android:fontFamily="monospace"
         android:text="Water Tracker"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/waterFill"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.192" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
