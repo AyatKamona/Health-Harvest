@@ -10,15 +10,18 @@ import android.os.Build
 import android.os.IBinder
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import csci5708.mobilecomputing.healthharvest.AddFoodItemActivity
 import csci5708.mobilecomputing.healthharvest.R
 import csci5708.mobilecomputing.healthharvest.WaterDatabaseHelper
 import csci5708.mobilecomputing.healthharvest.receivers.WaterNotificationActionReceiver
 
 class WaterCounterNotificationService: Service() {
     private lateinit var notificationManager: NotificationManager
+    private lateinit var context: Context
 
     override fun onCreate() {
         super.onCreate()
+        context = this
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createNotificationChannel()
     }
@@ -29,6 +32,8 @@ class WaterCounterNotificationService: Service() {
 
         contentView.setOnClickPendingIntent(R.id.btnIncrease, getPendingIntentForAction(ACTION_INCREASE))
         contentView.setOnClickPendingIntent(R.id.btnDecrease, getPendingIntentForAction(ACTION_DECREASE))
+
+        contentView.setOnClickPendingIntent(R.id.addFoodButton, getPendingIntentForActivity(context))
 
         val waterDatabaseHelper = WaterDatabaseHelper(this)
         val count = waterDatabaseHelper.getTotalWaterIntakeForToday()
@@ -64,6 +69,11 @@ class WaterCounterNotificationService: Service() {
             )
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun getPendingIntentForActivity(context: Context): PendingIntent {
+        val intent = Intent(context, AddFoodItemActivity::class.java)
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
