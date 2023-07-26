@@ -10,7 +10,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var welcomeButton: Button = findViewById(R.id.welcomeButton)
+        // start the user dashboard activity if the user name is already set
+        val sharedPref = getSharedPreferences("user", MODE_PRIVATE)
+        val user = sharedPref.getString("userName", null)
+        if(user != null) {
+            val intent = Intent(this, UserDashboard::class.java)
+            startActivity(intent)
+        }
+
+        val welcomeButton: Button = findViewById(R.id.welcomeButton)
         welcomeButton.setOnClickListener {
             val intent = Intent(this, UserOnboarding::class.java)
             startActivity(intent)
