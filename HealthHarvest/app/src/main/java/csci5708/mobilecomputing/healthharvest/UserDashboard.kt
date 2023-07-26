@@ -2,6 +2,7 @@ package csci5708.mobilecomputing.healthharvest
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -75,7 +76,9 @@ class UserDashboard : AppCompatActivity() {
         val calorieTracker: Double = foodDatabaseHelper.getTotalCaloriesToday().toDouble()/AppData.calorieGoal
         //var calorieTracker: Double = 2.0/AppData.calorieGoal
 
-        val timeWaterDif = (System.currentTimeMillis() - AppData.lastTimeWaterAdded)/(1000*60*60)
+        val lastWaterConsumption = waterDatabaseHelper.getLastWaterIntakeInMilliSecondsSinceEpochs()
+        Log.w("water-consumption", "last water consumption: $lastWaterConsumption", )
+        val timeWaterDif = (System.currentTimeMillis() - lastWaterConsumption)/(1000*60*60)
         val timeFoodDif = (System.currentTimeMillis() - AppData.lastTimeFoodAdded)/(1000*60*60)
 
 

@@ -4,13 +4,12 @@ import android.app.TimePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import android.widget.TimePicker
-import csci5708.mobilecomputing.healthharvest.dataModels.FoodItem
+import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 import java.util.Calendar
 
 

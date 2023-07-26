@@ -1,23 +1,20 @@
 package csci5708.mobilecomputing.healthharvest
 
 import android.app.DatePickerDialog
-import android.content.Context
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import csci5708.mobilecomputing.healthharvest.dataModels.FoodItem
-import java.util.Calendar
-import kotlin.random.Random
-import android.app.TimePickerDialog
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TimePicker
-import java.text.SimpleDateFormat
-import java.util.*
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
+import java.util.Calendar
+import kotlin.random.Random
 
 
 class AddFoodItemActivity : AppCompatActivity() {
