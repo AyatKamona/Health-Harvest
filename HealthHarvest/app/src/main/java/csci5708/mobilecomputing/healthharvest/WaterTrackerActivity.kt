@@ -17,19 +17,26 @@ class WaterTrackerActivity : AppCompatActivity() {
 
     var count: Int = 0
     private lateinit var waterIcon: ImageView
+    private lateinit var waterDatabaseHelper: WaterDatabaseHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_water_tracker)
 
-        var tvtext: TextView = findViewById(R.id.tvtext)
-        var btnplus: Button = findViewById(R.id.btnplus)
-        var btnminus: Button = findViewById(R.id.btnminus)
-        var progressBar: ProgressBar = findViewById(R.id.progressBar)
+        val tvtext: TextView = findViewById(R.id.tvtext)
+        val btnplus: Button = findViewById(R.id.btnplus)
+        val btnminus: Button = findViewById(R.id.btnminus)
+        val progressBar: ProgressBar = findViewById(R.id.progressBar)
         waterIcon = findViewById(R.id.waterIcon)
-        var waterDialogue: TextView = findViewById(R.id.waterDialogue)
+        val waterDialogue: TextView = findViewById(R.id.waterDialogue)
 
+        waterDatabaseHelper = WaterDatabaseHelper(this)
+        count = waterDatabaseHelper.getTotalWaterIntakeForToday()
         tvtext.setText("" + count)
         waterDialogue.setText("Let's start!")
+
+        progressBar.setProgress(count * 10)
+        setwaterDialogue(waterDialogue, count)
+        animateIcons(waterDialogue)
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -58,22 +65,24 @@ class WaterTrackerActivity : AppCompatActivity() {
         }
 
         btnplus.setOnClickListener {
-            tvtext.setText("" + ++count)
+            waterDatabaseHelper.addWaterIntakeForToday()
+            count = waterDatabaseHelper.getTotalWaterIntakeForToday()
+            tvtext.setText("" + count)
             progressBar.setProgress(count * 10)
             setwaterDialogue(waterDialogue, count)
             animateIcons(waterDialogue)
-            updateWater()
 
 
         }
 
         btnminus.setOnClickListener {
             if(count > 0){
-                tvtext.setText("" + --count)
+                waterDatabaseHelper.removeLatestWaterIntakeForToday()
+                count = waterDatabaseHelper.getTotalWaterIntakeForToday()
+                tvtext.setText("" + count)
                 progressBar.setProgress(count * 10)
                 setwaterDialogue(waterDialogue, count)
                 animateIcons(waterDialogue)
-                updateWater()
             }
 
 
@@ -121,11 +130,5 @@ class WaterTrackerActivity : AppCompatActivity() {
         } else {
             waterDialogue.setText(getString(R.string.dialogue9))
         }
-    }
-
-    fun updateWater(){
-
-        AppData.cupsOfWater = count.toDouble()
-        AppData.lastTimeWaterAdded = System.currentTimeMillis()
     }
 }
