@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:backgroundTint="#68B1DD"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/handjet"
         android:text="Water Tracker"
         android:textAlignment="center"
         android:textSize="30sp"
