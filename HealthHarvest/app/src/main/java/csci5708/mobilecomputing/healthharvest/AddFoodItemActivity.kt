@@ -1,19 +1,13 @@
 package csci5708.mobilecomputing.healthharvest
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.EditText
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-import java.util.Calendar
 import kotlin.random.Random
 import android.widget.TextView
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
@@ -43,7 +37,7 @@ class AddFoodItemActivity : AppCompatActivity() {
         foodDatabaseHelper = FoodDatabaseHelper(this)
 
         // Get all food items from the database
-        val foodList = foodDatabaseHelper.getAllFoodItems()
+        val foodList = foodDatabaseHelper.getAllFoodItemsForToday()
 
         // Extract food names from the food items list
         val foodNames = foodList.map { it.name }.toTypedArray()
@@ -77,7 +71,7 @@ class AddFoodItemActivity : AppCompatActivity() {
 
         val randomId = Random.nextLong()
 
-        val foodItem = FoodItem(randomId, name, FoodItem.getCurrentDate(), calories, quantity, FoodItem.getCurrentTime())
+        val foodItem = FoodItem(randomId, name, System.currentTimeMillis(), calories, quantity)
 
         val newRowId = foodDatabaseHelper.insertFoodItem(foodItem)
 

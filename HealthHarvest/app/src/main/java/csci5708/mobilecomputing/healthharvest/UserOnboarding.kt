@@ -19,7 +19,6 @@ class UserOnboarding : AppCompatActivity() {
         // start the user dashboard activity if the user name is already set
         val sharedPref = getSharedPreferences("user", MODE_PRIVATE)
         val user = sharedPref.getString("userName", null)
-        Log.d("health-harvest", "onCreate: $user")
         if(user != null) {
             val intent = Intent(this, UserDashboard::class.java)
             startActivity(intent)

@@ -1,6 +1,5 @@
 package csci5708.mobilecomputing.healthharvest
 
-import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
@@ -9,9 +8,6 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
-import java.util.Locale
-import java.util.Calendar
-import android.widget.TimePicker
 
 class EditFoodItemActivity : AppCompatActivity() {
     private lateinit var foodDatabaseHelper: FoodDatabaseHelper
@@ -37,7 +33,7 @@ class EditFoodItemActivity : AppCompatActivity() {
         discardButton = findViewById(R.id.discardButton)
 
         // Get all food items from the database
-        val foodList = foodDatabaseHelper.getAllFoodItems()
+        val foodList = foodDatabaseHelper.getAllFoodItemsForToday()
 
         // Extract food names from the food items list
         val foodNames = foodList.map { it.name }.toTypedArray()
@@ -63,14 +59,13 @@ class EditFoodItemActivity : AppCompatActivity() {
             val quantity = editQuantityEditText.toString().toInt()
 
             // Update the record in the database
-            val updatedFoodItem = FoodItem(foodItemId, newName, FoodItem.getCurrentDate(), newCalories, quantity, FoodItem.getCurrentTime())
+            val updatedFoodItem = FoodItem(foodItemId, newName, System.currentTimeMillis(), newCalories, quantity)
 
             foodDatabaseHelper.updateFoodItem(updatedFoodItem)
             navigateToFoodTrackerActivity()
         }
 
         discardButton.setOnClickListener {
-            // Discard changes and navigate back to FoodTrackerActivity
             navigateToFoodTrackerActivity()
         }
     }
@@ -78,6 +73,6 @@ class EditFoodItemActivity : AppCompatActivity() {
     private fun navigateToFoodTrackerActivity() {
         val intent = Intent(this, FoodTrackerActivity::class.java)
         startActivity(intent)
-        finish() // Call finish to remove EditFoodItemActivity from the back stack
+        finish()
     }
 }
