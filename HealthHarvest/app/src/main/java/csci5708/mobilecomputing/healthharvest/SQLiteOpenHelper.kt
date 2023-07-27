@@ -262,7 +262,7 @@ class FoodDatabaseHelper(context: Context) :
 
     fun getLastFoodIntakeInMilliSecondsSinceEpochs(): Long {
         val db = this.readableDatabase
-        val columns = arrayOf(COLUMN_NAME)
+        val columns = arrayOf(COLUMN_DATE_TAKEN)
 
         val cursor: Cursor? = db.query(FoodDatabaseHelper.TABLE_NAME, columns, null, null, null, null, "${FoodDatabaseHelper.COLUMN_DATE_TAKEN} DESC")
 
