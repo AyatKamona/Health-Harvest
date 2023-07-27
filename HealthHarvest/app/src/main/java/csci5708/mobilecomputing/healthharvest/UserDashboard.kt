@@ -12,7 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 object AppData{
 
 
-    const val calorieGoal: Double = 3000.01
+    const val calorieGoal: Double = 2000.0
 
     const val waterGoal: Double = 8.0
 
@@ -96,8 +96,8 @@ class UserDashboard : AppCompatActivity() {
 
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.healthysappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.healthyplant)
-                else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.healthytree)
-                else if (calorieTracker > 1.5){
+                else if (1.0 >= calorieTracker )tree.setImageResource(R.drawable.healthytree)
+                else {
                     tree.setImageResource(R.drawable.deadtree)
                     AppData.whatsNeeded = "Hey there! Your tree is feeling a bit stuffed. Remember, moderation is key to a healthy lifestyle."
                 }
@@ -108,8 +108,8 @@ class UserDashboard : AppCompatActivity() {
 
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.sunnysappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.sunnyplant)
-                else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.sunnytree)
-                else if (calorieTracker > 1.5){
+                else if (1.0 >= calorieTracker )tree.setImageResource(R.drawable.sunnytree)
+                else{
                     tree.setImageResource(R.drawable.deadtree)
                     AppData.whatsNeeded = "Hey there! Your tree is feeling a bit stuffed. Remember, moderation is key to a healthy lifestyle."
                 }
@@ -118,8 +118,8 @@ class UserDashboard : AppCompatActivity() {
             else{
                 if (calorieTracker < 0.33) tree.setImageResource(R.drawable.rainsappling)
                 else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.rainplant)
-                else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.raintree)
-                else if (calorieTracker > 1.5){
+                else if (1.0 >= calorieTracker )tree.setImageResource(R.drawable.raintree)
+                else{
                     tree.setImageResource(R.drawable.deadtree)
                     AppData.whatsNeeded = "Hey there! Your tree is feeling a bit stuffed. Remember, moderation is key to a healthy lifestyle."
                 }
@@ -131,8 +131,8 @@ class UserDashboard : AppCompatActivity() {
 
             if (calorieTracker < 0.33) tree.setImageResource(R.drawable.regular_sapling)
             else if (0.66 > calorieTracker) tree.setImageResource(R.drawable.regular_plant)
-            else if (1.4 > calorieTracker && calorieTracker>0.9)tree.setImageResource(R.drawable.regular_tree)
-            else if (calorieTracker > 1.5){
+            else if (1.0 >= calorieTracker )tree.setImageResource(R.drawable.regular_tree)
+            else {
                 tree.setImageResource(R.drawable.deadtree)
                 AppData.whatsNeeded = "Your tree is feeling stuffed. Remember, moderation is key to a healthy lifestyle."
             }
