@@ -26,14 +26,29 @@
             android:id="@+id/editDateTakenEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Date Taken"
-            android:onClick="showTimePickerDialog"
-            />
+            android:inputType="time"
+        android:hint="Time Taken" />
+
+        <EditText
+            android:id="@+id/editDateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:hint="Date" />
+
+        <EditText
+            android:id="@+id/editQuantityEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Quantity" />
+
 
         <EditText
             android:id="@+id/editCaloriesEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="Calories" />
 
         <Button
@@ -49,7 +64,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#68B1DD"
             android:text="Discard" />
-
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

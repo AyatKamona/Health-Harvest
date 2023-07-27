@@ -12,18 +12,23 @@ import android.widget.EditText
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
+
 import java.util.Calendar
 import kotlin.random.Random
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.TextView
+import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 
 
 class AddFoodItemActivity : AppCompatActivity() {
     private lateinit var foodNameEditText: AutoCompleteTextView
-    private lateinit var dateTakenEditText: EditText
-    private lateinit var caloriesEditText: EditText
-    private lateinit var optionEditText: EditText
+    private lateinit var timeTakenEditText: TextView
+    private lateinit var caloriesEditText: TextView
+    private lateinit var quantityEditText: TextView
+    private lateinit var dateEditText: TextView
     private lateinit var addFoodButton: Button
-    private lateinit var cancelFoodButton : Button
+    private lateinit var cancelFoodButton: Button
 
     private lateinit var foodDatabaseHelper: FoodDatabaseHelper
 
@@ -32,8 +37,10 @@ class AddFoodItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_food_item)
 
         foodNameEditText = findViewById(R.id.foodNameEditText)
-        dateTakenEditText = findViewById(R.id.dateTakenEditText)
+        timeTakenEditText = findViewById(R.id.dateTakenEditText)
         caloriesEditText = findViewById(R.id.caloriesEditText)
+        quantityEditText = findViewById(R.id.quantityEditText)
+        dateEditText = findViewById(R.id.dateEditText)
 
         addFoodButton = findViewById(R.id.addFoodButton)
         cancelFoodButton = findViewById(R.id.cancelAddFoodButton)
@@ -56,30 +63,36 @@ class AddFoodItemActivity : AppCompatActivity() {
             saveFoodItem()
         }
 
-        cancelFoodButton.setOnClickListener{
+        cancelFoodButton.setOnClickListener {
             val intent = Intent(this, FoodTrackerActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        timeTakenEditText.setOnClickListener {
+            showDatePickerDialog(timeTakenEditText)
+        }
 
+        dateEditText.setOnClickListener {
+            showDatePickerDialog(dateEditText)
+        }
     }
 
     private fun saveFoodItem() {
         val name = foodNameEditText.text.toString()
-        val dateTaken = dateTakenEditText.text.toString()
+        val dateTaken = timeTakenEditText.text.toString()
         val calories = caloriesEditText.text.toString().toIntOrNull()
+        val quantity = quantityEditText.text.toString().toIntOrNull()
+        val date = dateEditText.text.toString()
 
-
-        if (name.isBlank() || dateTaken.isBlank() || calories == null) {
+        if (name.isBlank() || dateTaken.isBlank() || calories == null || quantity == null || date.isBlank()) {
             showToast("Please fill all the fields.")
             return
         }
 
         val randomId = Random.nextLong()
 
-
-        val foodItem = FoodItem(randomId,name , dateTaken, calories)
+        val foodItem = FoodItem(randomId, name, dateTaken, calories, quantity, date)
 
         val newRowId = foodDatabaseHelper.insertFoodItem(foodItem)
 
@@ -108,33 +121,16 @@ class AddFoodItemActivity : AppCompatActivity() {
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
                 val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
-                dateTakenEditText.setText(formattedDate)
+                if (view == timeTakenEditText) {
+                    timeTakenEditText.text = formattedDate
+                } else if (view == dateEditText) {
+                    dateEditText.text = formattedDate
+                }
             },
             year,
             month,
             day
         )
         datePickerDialog.show()
-    }
-
-    // Function to show TimePickerDialog
-    fun showTimePickerDialog(view: View) {
-        val currentTime = Calendar.getInstance()
-        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
-        val minute = currentTime.get(Calendar.MINUTE)
-
-        val timePickerDialog = TimePickerDialog(
-            this,
-            TimePickerDialog.OnTimeSetListener { _: TimePicker, hourOfDay: Int, minute: Int ->
-                // Format the selected time and set it to the "Date Taken" EditText
-                val selectedTime = String.format("%02d:%02d", hourOfDay, minute)
-                dateTakenEditText.setText(selectedTime)
-            },
-            hour,
-            minute,
-            true
-        )
-
-        timePickerDialog.show()
     }
 }
