@@ -21,10 +21,8 @@ import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 
 class AddFoodItemActivity : AppCompatActivity() {
     private lateinit var foodNameEditText: AutoCompleteTextView
-    private lateinit var timeTakenEditText: TextView
     private lateinit var caloriesEditText: TextView
     private lateinit var quantityEditText: TextView
-    private lateinit var dateEditText: TextView
     private lateinit var addFoodButton: Button
     private lateinit var cancelFoodButton: Button
 
@@ -35,10 +33,9 @@ class AddFoodItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_food_item)
 
         foodNameEditText = findViewById(R.id.foodNameEditText)
-        timeTakenEditText = findViewById(R.id.dateTakenEditText)
         caloriesEditText = findViewById(R.id.caloriesEditText)
         quantityEditText = findViewById(R.id.quantityEditText)
-        dateEditText = findViewById(R.id.dateEditText)
+
 
         addFoodButton = findViewById(R.id.addFoodButton)
         cancelFoodButton = findViewById(R.id.cancelAddFoodButton)
@@ -66,31 +63,21 @@ class AddFoodItemActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        timeTakenEditText.setOnClickListener {
-            showDatePickerDialog(timeTakenEditText)
-        }
-
-        dateEditText.setOnClickListener {
-            showDatePickerDialog(dateEditText)
-        }
     }
 
     private fun saveFoodItem() {
         val name = foodNameEditText.text.toString()
-        val dateTaken = timeTakenEditText.text.toString()
         val calories = caloriesEditText.text.toString().toIntOrNull()
         val quantity = quantityEditText.text.toString().toIntOrNull()
-        val date = dateEditText.text.toString()
 
-        if (name.isBlank() || dateTaken.isBlank() || calories == null || quantity == null || date.isBlank()) {
+        if (name.isBlank() || calories == null || quantity == null ) {
             showToast("Please fill all the fields.")
             return
         }
 
         val randomId = Random.nextLong()
 
-        val foodItem = FoodItem(randomId, name, dateTaken, calories, quantity, date)
+        val foodItem = FoodItem(randomId, name, FoodItem.getCurrentDate(), calories, quantity, FoodItem.getCurrentTime())
 
         val newRowId = foodDatabaseHelper.insertFoodItem(foodItem)
 
@@ -107,28 +94,5 @@ class AddFoodItemActivity : AppCompatActivity() {
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
-    fun showDatePickerDialog(view: View) {
-        val currentDate = Calendar.getInstance()
-        val year = currentDate.get(Calendar.YEAR)
-        val month = currentDate.get(Calendar.MONTH)
-        val day = currentDate.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            this,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
-                if (view == timeTakenEditText) {
-                    timeTakenEditText.text = formattedDate
-                } else if (view == dateEditText) {
-                    dateEditText.text = formattedDate
-                }
-            },
-            year,
-            month,
-            day
-        )
-        datePickerDialog.show()
     }
 }
