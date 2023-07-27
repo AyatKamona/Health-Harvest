@@ -13,7 +13,7 @@
         android:layout_height="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="76dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/handjet"
         android:gravity="center"
         android:text="User Dashboard"
         android:textAlignment="center"
@@ -24,41 +24,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.001" />
+        app:layout_constraintVertical_bias="0.001"
+     />
 
     <ImageView
         android:id="@+id/tree_pic"
-        android:layout_width="343dp"
-        android:layout_height="408dp"
+        android:layout_width="319dp"
+        android:layout_height="375dp"
         android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.256" />
+        app:layout_constraintVertical_bias="0.319" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="175dp"
         android:layout_height="105dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87"
+        app:layout_constraintTop_toBottomOf="@+id/tree_pic"
+        app:layout_constraintVertical_bias="0.3"
         app:srcCompat="@drawable/bordersquare" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="175dp"
         android:layout_height="105dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87"
+        app:layout_constraintTop_toBottomOf="@+id/tree_pic"
+        app:layout_constraintVertical_bias="0.3"
         app:srcCompat="@drawable/bordersquare" />
 
     <ImageView
@@ -67,10 +68,10 @@
         android:layout_height="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.809"
+        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.074"
         app:srcCompat="@drawable/droplet" />
 
     <ImageView
@@ -81,15 +82,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.787"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.808"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.075"
         app:srcCompat="@drawable/height" />
 
     <TextView
         android:id="@+id/height_tree"
         android:layout_width="167dp"
         android:layout_height="45dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/robotomono"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@color/black"
@@ -97,35 +98,35 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.877" />
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.355" />
 
     <TextView
         android:id="@+id/whatsNeeded"
-        android:layout_width="194dp"
-        android:layout_height="29dp"
-        android:background="@drawable/red"
-        android:fontFamily="monospace"
+        android:layout_width="408dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bordersquare"
+        android:fontFamily="@font/handjet"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="15dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tree_pic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeMessage"
+        app:layout_constraintVertical_bias="0.391" />
 
     <TextView
         android:id="@+id/soilMoisture"
         android:layout_width="163dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/robotomono"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@color/black"
@@ -133,10 +134,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.028"
+        app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.307" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

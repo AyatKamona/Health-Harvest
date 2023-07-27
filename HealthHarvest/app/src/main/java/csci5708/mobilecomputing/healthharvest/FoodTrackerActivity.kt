@@ -31,6 +31,7 @@ class FoodTrackerActivity : AppCompatActivity() {
 
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        bottomNavigationView.menu.findItem(R.id.food).isChecked = true
 
         val fabAddFood: FloatingActionButton = findViewById(R.id.fabAddFood)
         fabAddFood.setOnClickListener {
@@ -104,17 +105,23 @@ class FoodTrackerActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.dashboard -> {
                     val intent = Intent(this@FoodTrackerActivity, UserDashboard::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                 }
 
                 R.id.food -> {
                     val intent = Intent(this@FoodTrackerActivity, FoodTrackerActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                 }
 
                 R.id.water -> {
                     val intent = Intent(this@FoodTrackerActivity, WaterTrackerActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent)
+                    overridePendingTransition(0,0); //0 for no animation
                 }
             }
             true
