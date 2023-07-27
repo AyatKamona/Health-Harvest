@@ -22,19 +22,6 @@
             android:inputType="text"
             android:hint="Food Name" />
 
-        <EditText
-            android:id="@+id/editDateTakenEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="time"
-        android:hint="Time Taken" />
-
-        <EditText
-            android:id="@+id/editDateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:hint="Date" />
 
         <EditText
             android:id="@+id/editQuantityEditText"

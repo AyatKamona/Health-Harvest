@@ -42,8 +42,42 @@ class FoodDatabaseHelper(context: Context) :
                 "$COLUMN_TIME_TAKEN TEXT" +
                 ")"
         db.execSQL(createTableQuery)
+
+        // Insert two default food items
+        insertDefaultFoodItems(db)
     }
 
+    fun insertDefaultFoodItems(db: SQLiteDatabase) {
+        val defaultFoodItems = listOf(
+            FoodItem(
+                id = 1,
+                name = "Apple",
+                DateTaken = "2023-07-20",
+                calories = 52,
+                quantity = 1,
+                timeTaken = "12:00 PM"
+            ),
+            FoodItem(
+                id = 2,
+                name = "Banana",
+                DateTaken = "2023-07-20",
+                calories = 89,
+                quantity = 1,
+                timeTaken = "03:00 PM"
+            )
+        )
+
+        for (foodItem in defaultFoodItems) {
+            val contentValues = ContentValues()
+            contentValues.put(COLUMN_NAME, foodItem.name)
+            contentValues.put(COLUMN_DATE_TAKEN, foodItem.DateTaken)
+            contentValues.put(COLUMN_CALORIES, foodItem.calories)
+            contentValues.put(COLUMN_QUANTITY, foodItem.quantity)
+            contentValues.put(COLUMN_TIME_TAKEN, foodItem.timeTaken)
+
+            db.insert(TABLE_NAME, null, contentValues)
+        }
+    }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
@@ -174,7 +208,7 @@ class FoodDatabaseHelper(context: Context) :
 
     fun getTotalCaloriesToday(): Int {
         val db = this.readableDatabase
-        val columns = arrayOf("SUM($COLUMN_CALORIES)")
+        val columns = arrayOf("SUM($COLUMN_CALORIES * $COLUMN_QUANTITY)")
 
         // Get the current date in yyyy-MM-dd format
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -182,7 +216,7 @@ class FoodDatabaseHelper(context: Context) :
         val selection = "$COLUMN_DATE_TAKEN = ?"
         val selectionArgs = arrayOf(currentDate)
 
-        val cursor: Cursor? = db.query(TABLE_NAME, columns, null, null, null, null, null)
+        val cursor: Cursor? = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null)
 
         cursor?.let {
             if (it.moveToFirst()) {

@@ -9,34 +9,62 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Food Name Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Name:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
         <!-- Food Name -->
         <TextView
             android:id="@+id/foodNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="end" />
+
+        <!-- Quantity Label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity:"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Date Taken -->
+        <!-- Quantity Taken -->
         <TextView
-            android:id="@+id/dateTakenTextView"
+            android:id="@+id/quantityTakenTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_gravity="end" />
 
-        <!-- Calories -->
+        <!-- Total Calories Label -->
         <TextView
-            android:id="@+id/caloriesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
+            android:text="Total Calories:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Total Calories -->
+        <TextView
+            android:id="@+id/totalCaloriesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_gravity="end" />
 
         <!-- Option Layout (Edit and Delete Buttons) -->
         <LinearLayout
             android:id="@+id/optionLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="end">
 
             <ImageView
                 android:id="@+id/editImageView"
@@ -54,6 +82,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 
 
