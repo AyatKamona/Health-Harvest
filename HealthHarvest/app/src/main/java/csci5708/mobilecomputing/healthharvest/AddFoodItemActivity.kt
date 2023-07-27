@@ -15,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 import java.util.Calendar
 import kotlin.random.Random
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 
