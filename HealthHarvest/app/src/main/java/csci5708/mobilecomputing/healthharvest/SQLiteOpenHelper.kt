@@ -4,9 +4,12 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import android.util.LogPrinter
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.Date
 import java.util.Locale
 
@@ -241,9 +244,6 @@ class WaterDatabaseHelper(context: Context) :
         AppData.lastTimeWaterAdded = System.currentTimeMillis()
         // set the datetime stamp when the water intake was added
         contentValues.put(COLUMN_DATE_TAKEN, System.currentTimeMillis())
-
-
-
         val db = this.writableDatabase
         return db.insert(TABLE_NAME, null, contentValues).toInt()
     }
@@ -274,23 +274,23 @@ class WaterDatabaseHelper(context: Context) :
 
         val selection = "$COLUMN_DATE_TAKEN between ? and ?"
         // get the start and end of today in milliseconds using system time
-        val millisecondsStartOfToday = LocalDateTime.of(
+        val millisecondsStartOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
             LocalDateTime.now().year,
             LocalDateTime.now().month,
             LocalDateTime.now().dayOfMonth,
             0,
             0,
             0
-        ).toEpochSecond(java.time.ZoneOffset.UTC) * 1000
+        ))
 
-        val millisecondsEndOfToday = LocalDateTime.of(
+        val millisecondsEndOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
             LocalDateTime.now().year,
             LocalDateTime.now().month,
             LocalDateTime.now().dayOfMonth,
             23,
             59,
             59
-        ).toEpochSecond(java.time.ZoneOffset.UTC) * 1000
+        ))
 
         val selectionArgs = arrayOf(millisecondsStartOfToday.toString(), millisecondsEndOfToday.toString())
 
@@ -316,29 +316,38 @@ class WaterDatabaseHelper(context: Context) :
         return 0 // Return 0 if no water intake is found for today or an error occurs
     }
 
+    fun localDateTimeToMilliseconds(localDateTime: LocalDateTime): Long {
+        val zoneId = ZoneId.systemDefault() // You can use a specific ZoneId if needed
+        val zonedDateTime = localDateTime.atZone(zoneId)
+        val instant = zonedDateTime.toInstant()
+        return instant.toEpochMilli()
+    }
+
     fun getTotalWaterIntakeForToday(): Int {
         val db = this.readableDatabase
         val columns = arrayOf("COUNT($COLUMN_ID)")
 
         val selection = "$COLUMN_DATE_TAKEN between ? and ?"
         // get the start and end of today in milliseconds using system time
-        val millisecondsStartOfToday = LocalDateTime.of(
+        val millisecondsStartOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
             LocalDateTime.now().year,
             LocalDateTime.now().month,
             LocalDateTime.now().dayOfMonth,
             0,
             0,
             0
-        ).toEpochSecond(java.time.ZoneOffset.UTC) * 1000
+        ))
 
-        val millisecondsEndOfToday = LocalDateTime.of(
+        val millisecondsEndOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
             LocalDateTime.now().year,
             LocalDateTime.now().month,
             LocalDateTime.now().dayOfMonth,
             23,
             59,
             59
-        ).toEpochSecond(java.time.ZoneOffset.UTC) * 1000
+        ))
+
+
 
         val selectionArgs = arrayOf(millisecondsStartOfToday.toString(), millisecondsEndOfToday.toString())
 
