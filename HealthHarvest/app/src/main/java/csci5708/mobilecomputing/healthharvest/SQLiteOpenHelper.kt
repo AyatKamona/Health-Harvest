@@ -4,14 +4,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import android.util.LogPrinter
 import csci5708.mobilecomputing.healthharvest.DataModels.FoodItem
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.Date
-import java.util.Locale
 
 class FoodDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -25,9 +20,8 @@ class FoodDatabaseHelper(context: Context) :
 
         // New columns
         private const val COLUMN_QUANTITY = "quantity"
-        private const val COLUMN_TIME_TAKEN = "time_taken"
 
-        private const val DATABASE_VERSION = 2 // Increment the version for the schema change
+        private const val DATABASE_VERSION = 3 // Increment the version for the schema change
         private const val DATABASE_NAME = "food_database"
         private const val TABLE_NAME = "food_items"
     }
@@ -36,14 +30,12 @@ class FoodDatabaseHelper(context: Context) :
         val createTableQuery = "CREATE TABLE IF NOT EXISTS $TABLE_NAME (" +
                 "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUMN_NAME TEXT, " +
-                "$COLUMN_DATE_TAKEN TEXT, " +
+                "$COLUMN_DATE_TAKEN INTEGER, " +
                 "$COLUMN_CALORIES INTEGER, " +
-                "$COLUMN_QUANTITY INTEGER, " +
-                "$COLUMN_TIME_TAKEN TEXT" +
+                "$COLUMN_QUANTITY INTEGER" +
                 ")"
         db.execSQL(createTableQuery)
 
-        // Insert two default food items
         insertDefaultFoodItems(db)
     }
 
@@ -52,18 +44,16 @@ class FoodDatabaseHelper(context: Context) :
             FoodItem(
                 id = 1,
                 name = "Apple",
-                DateTaken = "2023-07-20",
+                DateTaken = 0,
                 calories = 52,
-                quantity = 1,
-                timeTaken = "12:00 PM"
+                quantity = 1
             ),
             FoodItem(
                 id = 2,
                 name = "Banana",
-                DateTaken = "2023-07-20",
+                DateTaken = 0,
                 calories = 89,
-                quantity = 1,
-                timeTaken = "03:00 PM"
+                quantity = 1
             )
         )
 
@@ -73,7 +63,6 @@ class FoodDatabaseHelper(context: Context) :
             contentValues.put(COLUMN_DATE_TAKEN, foodItem.DateTaken)
             contentValues.put(COLUMN_CALORIES, foodItem.calories)
             contentValues.put(COLUMN_QUANTITY, foodItem.quantity)
-            contentValues.put(COLUMN_TIME_TAKEN, foodItem.timeTaken)
 
             db.insert(TABLE_NAME, null, contentValues)
         }
@@ -90,40 +79,61 @@ class FoodDatabaseHelper(context: Context) :
         contentValues.put(COLUMN_DATE_TAKEN, foodItem.DateTaken) // Updated field name
         contentValues.put(COLUMN_CALORIES, foodItem.calories)
         contentValues.put(COLUMN_QUANTITY, foodItem.quantity) // New field
-        contentValues.put(COLUMN_TIME_TAKEN, foodItem.timeTaken)
 
         val db = this.writableDatabase
         return db.insert(TABLE_NAME, null, contentValues)
     }
 
 
-    fun getAllFoodItems(): List<FoodItem> {
+    fun getAllFoodItemsForToday(): List<FoodItem> {
         val foodList = mutableListOf<FoodItem>()
         val db = this.readableDatabase
-        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES, COLUMN_QUANTITY, COLUMN_TIME_TAKEN) // Add the new columns
+        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES, COLUMN_QUANTITY) // Add the new columns
 
-        val cursor: Cursor? = db.query(TABLE_NAME, columns, null, null, null, null, null)
+        val selection = "$COLUMN_DATE_TAKEN between ? and ?"
+        // get the start and end of today in milliseconds using system time
+        val millisecondsStartOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
+            LocalDateTime.now().year,
+            LocalDateTime.now().month,
+            LocalDateTime.now().dayOfMonth,
+            0,
+            0,
+            0
+        ))
+
+        val millisecondsEndOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
+            LocalDateTime.now().year,
+            LocalDateTime.now().month,
+            LocalDateTime.now().dayOfMonth,
+            23,
+            59,
+            59
+        ))
+
+        val selectionArgs = arrayOf(millisecondsStartOfToday.toString(), millisecondsEndOfToday.toString())
+
+        val cursor: Cursor? = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null) // Updated query to include the new columns
+
         cursor?.let {
             val idIndex = it.getColumnIndex(COLUMN_ID)
             val nameIndex = it.getColumnIndex(COLUMN_NAME)
             val dateTakenIndex = it.getColumnIndex(COLUMN_DATE_TAKEN)
             val caloriesIndex = it.getColumnIndex(COLUMN_CALORIES)
             val quantityIndex = it.getColumnIndex(COLUMN_QUANTITY) // New field
-            val timeTakenIndex = it.getColumnIndex(COLUMN_TIME_TAKEN) // New field
 
             while (it.moveToNext()) {
                 val id = if (idIndex != -1) it.getLong(idIndex) else -1
                 val name = if (nameIndex != -1) it.getString(nameIndex) else ""
-                val dateTaken = if (dateTakenIndex != -1) it.getString(dateTakenIndex) else ""
+                val dateTaken = if (dateTakenIndex != -1) it.getLong(dateTakenIndex) else 0
                 val calories = if (caloriesIndex != -1) it.getInt(caloriesIndex) else 0
                 val quantity = if (quantityIndex != -1) it.getInt(quantityIndex) else 0 // New field
-                val timeTaken = if (timeTakenIndex != -1) it.getString(timeTakenIndex) else "" // New field
 
-                val foodItem = FoodItem(id, name, dateTaken, calories, quantity, timeTaken) // Include the new fields in the FoodItem object
-                foodList.add(foodItem)
+                foodList.add(FoodItem(id, name, dateTaken, calories, quantity)) // Include the new fields in the FoodItem object
             }
+
             it.close()
         }
+
         return foodList
     }
 
@@ -161,7 +171,7 @@ class FoodDatabaseHelper(context: Context) :
 
     fun getFoodItem(id: Long): FoodItem? {
         val db = this.readableDatabase
-        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES, COLUMN_QUANTITY, COLUMN_TIME_TAKEN) // Add the new columns
+        val columns = arrayOf(COLUMN_ID, COLUMN_NAME, COLUMN_DATE_TAKEN, COLUMN_CALORIES, COLUMN_QUANTITY) // Add the new columns
 
         val selection = "$COLUMN_ID = ?"
         val selectionArgs = arrayOf(id.toString())
@@ -174,23 +184,20 @@ class FoodDatabaseHelper(context: Context) :
                 val dateTakenIndex = it.getColumnIndex(COLUMN_DATE_TAKEN)
                 val caloriesIndex = it.getColumnIndex(COLUMN_CALORIES)
                 val quantityIndex = it.getColumnIndex(COLUMN_QUANTITY) // New field
-                val timeTakenIndex = it.getColumnIndex(COLUMN_TIME_TAKEN) // New field
 
                 val id = if (idIndex != -1) it.getLong(idIndex) else -1
                 val name = if (nameIndex != -1) it.getString(nameIndex) else ""
-                val dateTaken = if (dateTakenIndex != -1) it.getString(dateTakenIndex) else ""
+                val dateTaken = if (dateTakenIndex != -1) it.getLong(dateTakenIndex) else 0
                 val calories = if (caloriesIndex != -1) it.getInt(caloriesIndex) else 0
                 val quantity = if (quantityIndex != -1) it.getInt(quantityIndex) else 0 // New field
-                val timeTaken = if (timeTakenIndex != -1) it.getString(timeTakenIndex) else "" // New field
 
-                return FoodItem(id, name, dateTaken, calories, quantity, timeTaken) // Include the new fields in the FoodItem object
+                return FoodItem(id, name, dateTaken, calories, quantity) // Include the new fields in the FoodItem object
             }
             it.close()
         }
         return null // Return null if the food item with the given id is not found
     }
 
-    // Function to update a FoodItem in the database
     fun updateFoodItem(foodItem: FoodItem): Int {
         val db = this.writableDatabase
         val contentValues = ContentValues()
@@ -198,7 +205,6 @@ class FoodDatabaseHelper(context: Context) :
         contentValues.put(COLUMN_DATE_TAKEN, foodItem.DateTaken)
         contentValues.put(COLUMN_CALORIES, foodItem.calories)
         contentValues.put(COLUMN_QUANTITY, foodItem.quantity) // New field
-        contentValues.put(COLUMN_TIME_TAKEN, foodItem.timeTaken) // New field
 
         val selection = "$COLUMN_ID = ?"
         val selectionArgs = arrayOf(foodItem.id.toString())
@@ -206,15 +212,39 @@ class FoodDatabaseHelper(context: Context) :
         return db.update(TABLE_NAME, contentValues, selection, selectionArgs)
     }
 
+    fun localDateTimeToMilliseconds(localDateTime: LocalDateTime): Long {
+        val zoneId = ZoneId.systemDefault() // You can use a specific ZoneId if needed
+        val zonedDateTime = localDateTime.atZone(zoneId)
+        val instant = zonedDateTime.toInstant()
+        return instant.toEpochMilli()
+    }
+
     fun getTotalCaloriesToday(): Int {
         val db = this.readableDatabase
         val columns = arrayOf("SUM($COLUMN_CALORIES * $COLUMN_QUANTITY)")
 
-        // Get the current date in yyyy-MM-dd format
-        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
-        val selection = "$COLUMN_DATE_TAKEN = ?"
-        val selectionArgs = arrayOf(currentDate)
+        val selection = "$COLUMN_DATE_TAKEN between ? and ?"
+        // get the start and end of today in milliseconds using system time
+        val millisecondsStartOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
+            LocalDateTime.now().year,
+            LocalDateTime.now().month,
+            LocalDateTime.now().dayOfMonth,
+            0,
+            0,
+            0
+        ))
+
+        val millisecondsEndOfToday = localDateTimeToMilliseconds(LocalDateTime.of(
+            LocalDateTime.now().year,
+            LocalDateTime.now().month,
+            LocalDateTime.now().dayOfMonth,
+            23,
+            59,
+            59
+        ))
+
+        val selectionArgs = arrayOf(millisecondsStartOfToday.toString(), millisecondsEndOfToday.toString())
 
         val cursor: Cursor? = db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null)
 
@@ -247,7 +277,7 @@ class FoodDatabaseHelper(context: Context) :
             }
             it.close()
         }
-        return 0 // Return 0 if no water intake is found for today or an error occurs
+        return 0 // Return 0 if no food intake is found for today
     }
 }
 
@@ -255,7 +285,7 @@ class WaterDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "water_database"
         private const val TABLE_NAME = "water_items"
         private const val COLUMN_ID = "id"

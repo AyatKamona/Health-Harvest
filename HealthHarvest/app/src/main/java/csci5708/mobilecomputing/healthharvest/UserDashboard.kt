@@ -84,7 +84,6 @@ class UserDashboard : AppCompatActivity() {
 
         val lastWaterConsumption = waterDatabaseHelper.getLastWaterIntakeInMilliSecondsSinceEpochs()
         val lastFoodConsumption = foodDatabaseHelper.getLastFoodIntakeInMilliSecondsSinceEpochs()
-        Log.w("water-consumption", "last water consumption: $lastWaterConsumption", )
         val timeWaterDif = (System.currentTimeMillis() - lastWaterConsumption)/(1000*60*60)
         val timeFoodDif = (System.currentTimeMillis() - lastFoodConsumption)/(1000*60*60)
 

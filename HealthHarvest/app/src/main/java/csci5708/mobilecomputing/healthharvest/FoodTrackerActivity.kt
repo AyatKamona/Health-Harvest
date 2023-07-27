@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -12,7 +11,6 @@ import android.widget.TableLayout
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import csci5708.mobilecomputing.healthharvest.R.id.quantityTakenTextView
 
 
 class FoodTrackerActivity : AppCompatActivity() {
@@ -42,7 +40,7 @@ class FoodTrackerActivity : AppCompatActivity() {
 
         foodDatabaseHelper = FoodDatabaseHelper(this)
 
-        val foodList = foodDatabaseHelper.getAllFoodItems()
+        val foodList = foodDatabaseHelper.getAllFoodItemsForToday()
 
         // Get the total calories consumed today
         val totalCaloriesToday = foodDatabaseHelper.getTotalCaloriesToday()
@@ -135,7 +133,7 @@ class FoodTrackerActivity : AppCompatActivity() {
 
     fun updateAccordionLayout() {
         // Get the updated foodList and update the accordionLayout accordingly
-        val updatedFoodList = foodDatabaseHelper.getAllFoodItems()
+        val updatedFoodList = foodDatabaseHelper.getAllFoodItemsForToday()
 
         // Clear the accordionLayout to remove all existing items
         accordionLayout.removeAllViews()
