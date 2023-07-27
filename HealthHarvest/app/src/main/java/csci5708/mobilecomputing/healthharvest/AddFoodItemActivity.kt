@@ -2,6 +2,7 @@ package csci5708.mobilecomputing.healthharvest
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
@@ -36,11 +37,10 @@ class AddFoodItemActivity : AppCompatActivity() {
 
         foodDatabaseHelper = FoodDatabaseHelper(this)
 
-        // Get all food items from the database
-        val foodList = foodDatabaseHelper.getAllFoodItemsForToday()
-
         // Extract food names from the food items list
-        val foodNames = foodList.map { it.name }.toTypedArray()
+        val foodNames = foodDatabaseHelper.getAllFoodNames()
+
+        Log.e("FoodNames", foodNames.toString())
 
         // Create an ArrayAdapter to provide suggestions to the AutoCompleteTextView
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, foodNames)

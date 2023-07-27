@@ -32,11 +32,8 @@ class EditFoodItemActivity : AppCompatActivity() {
         saveButton = findViewById(R.id.saveButton)
         discardButton = findViewById(R.id.discardButton)
 
-        // Get all food items from the database
-        val foodList = foodDatabaseHelper.getAllFoodItemsForToday()
-
         // Extract food names from the food items list
-        val foodNames = foodList.map { it.name }.toTypedArray()
+        val foodNames = foodDatabaseHelper.getAllFoodNames()
 
         // Create an ArrayAdapter to provide suggestions to the AutoCompleteTextView
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, foodNames)
