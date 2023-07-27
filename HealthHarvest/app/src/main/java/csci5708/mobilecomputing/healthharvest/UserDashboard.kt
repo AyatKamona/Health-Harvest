@@ -162,10 +162,10 @@ class UserDashboard : AppCompatActivity() {
         val formattedNumber = String.format("%.2f", heightValue)
         height.text = "Height: $formattedNumber inches"
 
-        if(waterTracker < 0.6 && calorieTracker < 0.9) AppData.whatsNeeded = "Don't forget to eat a balanced meal and drink enough water to see your tree flourish"
-        else if (waterTracker < 0.6 && 0.9 < calorieTracker && calorieTracker < 1.5)  AppData.whatsNeeded = "Take a sip of water now and watch your tree thrive!"
+        if(waterTracker < 0.6 && calorieTracker < 0.6) AppData.whatsNeeded = "Don't forget to eat a balanced meal and drink enough water to see your tree flourish"
+        else if (waterTracker < 0.6 && 0.6 <= calorieTracker && calorieTracker <= 1.0)  AppData.whatsNeeded = "Take a sip of water now and watch your tree thrive!"
         else if(waterTracker >= 0.6 && calorieTracker < 0.9) AppData.whatsNeeded = "Remember to fuel your body with nutritious food to help your tree flourish!"
-        else if (waterTracker >= 0.6 && 0.9 < calorieTracker && calorieTracker < 1.5) AppData.whatsNeeded = "Great job! Your tree is in full bloom and so are you!"
+        else if (waterTracker >= 0.6 && 0.6 <= calorieTracker && calorieTracker <= 1.0) AppData.whatsNeeded = "Great job! Your tree is in full bloom and so are you!"
 
     }
 }
